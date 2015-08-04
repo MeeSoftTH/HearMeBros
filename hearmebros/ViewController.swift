@@ -1080,7 +1080,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         println(iconImg.size.width)
         println(iconImg.size.height)
         
-        var settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: 320.0, andHeight: 64)
+        let newHeight = iconImg.size.height > 64 ? iconImg.size.height : 64
+        let newWidth = iconImg.size.width > 320.0 ? iconImg.size.width : 320.0
+        
+        var settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: newWidth, andHeight: newHeight)
         
         var movieMaker: CEMovieMaker = CEMovieMaker(setting: settings)
         
@@ -1430,7 +1433,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         // update 3
         if buttonOn3 == 1 {
-            self.personButton3.backgroundColor = UIColor.whiteColor()
+            self.personButton1.backgroundColor = UIColor.whiteColor()
             self.buttonIsOn1 = true
         }else if buttonOn3 == 2 {
             self.personButton2.backgroundColor = UIColor.whiteColor()
