@@ -68,6 +68,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRecorder()
+        self.actionIndicator.hidden = true
         UnityAds.sharedInstance().delegate = self
         UnityAds.sharedInstance().startWithGameId("57599")
         
@@ -201,7 +202,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         }
     }
     @IBAction func redoButton(sender: UIBarButtonItem) {
-        
+        self.actionIndicator.stopAnimating()
+        self.actionIndicator.hidden = true
         self.isAskOn = true
         self.isPreview = false
         self.questionSound = false
@@ -224,6 +226,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         self.buttonIsOn6 = false
         self.buttonIsOn7 = false
+        
+        self.acctionButton.enabled = true
         
         UnityAds.sharedInstance().delegate = self
         UnityAds.sharedInstance().startWithGameId("57599")
@@ -321,9 +325,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             self.presentViewController(refreshAlert, animated: true, completion: nil)
             
-        }else if(sender.titleLabel?.text == "Share") {
+        }else if(sender.titleLabel?.text == "Save") {
             self.statusLabel.text = "Waiting, your sound is process..."
             self.actionIndicator.hidden = false
+            self.actionIndicator.startAnimating()
             self.acctionButton.enabled = false
             self.redoAction.enabled = false
             
@@ -854,7 +859,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             // update 3
             if buttonOn3 == 1 {
-                self.personButton3.backgroundColor = UIColor.whiteColor()
+                self.personButton1.backgroundColor = UIColor.whiteColor()
                 
             }else if buttonOn3 == 2 {
                 self.personButton2.backgroundColor = UIColor.whiteColor()
@@ -882,7 +887,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 // update 4
                 if buttonOn4 == 1 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
                     
                 }else if buttonOn4 == 2 {
                     self.personButton2.backgroundColor = UIColor.whiteColor()
@@ -909,7 +914,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 // update 5
                 if buttonOn5 == 1 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
                     
                 }else if buttonOn5 == 2 {
                     self.personButton2.backgroundColor = UIColor.whiteColor()
@@ -936,7 +941,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 // update 6
                 if buttonOn6 == 1 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
                     
                 }else if buttonOn6 == 2 {
                     self.personButton2.backgroundColor = UIColor.whiteColor()
@@ -963,7 +968,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 // update 7
                 if buttonOn7 == 1 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
                     
                 }else if buttonOn7 == 2 {
                     self.personButton2.backgroundColor = UIColor.whiteColor()
@@ -1020,8 +1025,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             if self.isShare == true {
                 self.isShare = false
-                self.acctionButton.setTitle("Share", forState: .Normal)
-                self.statusLabel.text = "Share to social network!"
+                self.acctionButton.setTitle("Save", forState: .Normal)
+                self.statusLabel.text = "Save to gallery!"
                 
                 self.acctionButton.enabled = true
             }
@@ -1033,6 +1038,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     func compressFile() {
+        
+        self.acctionButton.setTitle("Waiting", forState: .Normal)
+        self.acctionButton.enabled = false
+        
         self.makeVideo()
         
         
@@ -1146,8 +1155,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         var assetTrack1:AVAssetTrack = tracks1[0] as! AVAssetTrack
         var assetTrack2:AVAssetTrack = tracks2[0] as! AVAssetTrack
         
-        var assetTrack3:AVAssetTrack = tracks1[0] as! AVAssetTrack
-        var assetTrack4:AVAssetTrack = tracks2[0] as! AVAssetTrack
+        var assetTrack3:AVAssetTrack = tracks3[0] as! AVAssetTrack
+        var assetTrack4:AVAssetTrack = tracks4[0] as! AVAssetTrack
         
         
         var duration1: CMTime = assetTrack1.timeRange.duration
@@ -1281,27 +1290,39 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 println("cancelled \(assetExport.error)")
             default:
                 println("complete")
+                
                 let assetsLib = ALAssetsLibrary()
                 assetsLib.writeVideoAtPathToSavedPhotosAlbum(assetExport.outputURL, completionBlock: {(url: NSURL!, error: NSError!)  in
-                    self.actionIndicator.hidden = true
                     println("SAVED URL %@",url);
                     
-                    self.needOpenVideo()
-                    
                     if error != nil{
+                        
                     }
                 })
+                
+                self.delay(2.0){
+                    self.actionIndicator.hidesWhenStopped = true
+                    self.actionIndicator.stopAnimating()
+                    self.actionIndicator.hidden = true
+                    
+                    self.delay(1.0) {
+                        self.acctionButton.enabled = true
+                        self.statusLabel.text = "Ask them"
+                        self.acctionButton.setTitle("Ask", forState: .Normal)
+                        
+                        self.needOpenVideo()
+                    }
+                }
             }
         })
     }
     
     func needOpenVideo() {
+        
         var refreshAlert = UIAlertController(title: "Successfuly", message: "Your video is saved to gallery!", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
             
-            self.statusLabel.text = "Ask them"
-            self.acctionButton.setTitle("Ask", forState: .Normal)
             self.isAskOn = true
             self.redoAction.enabled = false
             self.acctionButton.enabled = true

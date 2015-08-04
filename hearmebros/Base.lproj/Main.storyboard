@@ -320,7 +320,26 @@
                                             <action selector="button7:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HGJ-Bt-vD7"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Ixl-Qb-rvc">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ask them" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJH-ra-pgB">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="72" id="6oU-Wy-wCO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="23"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="6oU-Wy-wCO"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="6oU-Wy-wCO"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Ixl-Qb-rvc">
                                         <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="37" id="9r3-sy-cWL"/>
@@ -343,25 +362,6 @@
                                             </mask>
                                         </variation>
                                     </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ask them" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJH-ra-pgB">
-                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="72" id="6oU-Wy-wCO"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="23"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="6oU-Wy-wCO"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="6oU-Wy-wCO"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="2hm-tW-t62" firstAttribute="leading" secondItem="krs-b6-ehU" secondAttribute="trailing" constant="8" symbolic="YES" id="0Lh-y7-avt"/>
@@ -388,7 +388,7 @@
                                     <constraint firstItem="Ixl-Qb-rvc" firstAttribute="centerX" secondItem="YPn-Qw-xdJ" secondAttribute="centerX" id="XTC-J9-qh2"/>
                                     <constraint firstItem="ouH-MY-EmO" firstAttribute="top" secondItem="reC-cC-ezI" secondAttribute="top" id="Y8Q-Tm-Pq5"/>
                                     <constraint firstItem="TJH-ra-pgB" firstAttribute="top" secondItem="Ixl-Qb-rvc" secondAttribute="bottom" constant="8" symbolic="YES" id="YS5-IM-Wl4">
-                                        <variation key="widthClass=compact" constant="-109"/>
+                                        <variation key="widthClass=compact" constant="-100"/>
                                     </constraint>
                                     <constraint firstItem="jiI-2m-FLa" firstAttribute="top" secondItem="4K1-W9-9oJ" secondAttribute="top" id="Z7l-aL-yO0"/>
                                     <constraint firstItem="2hm-tW-t62" firstAttribute="trailing" secondItem="TJH-ra-pgB" secondAttribute="trailing" id="ZQP-cl-xg2">
@@ -417,7 +417,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="368" id="pCQ-2j-APk"/>
                                     <constraint firstItem="Ixl-Qb-rvc" firstAttribute="top" secondItem="YPn-Qw-xdJ" secondAttribute="top" id="pKm-Ih-1hh"/>
                                     <constraint firstItem="Ixl-Qb-rvc" firstAttribute="top" secondItem="YPn-Qw-xdJ" secondAttribute="top" id="vpV-r7-lhH">
-                                        <variation key="widthClass=compact" constant="80"/>
+                                        <variation key="widthClass=compact" constant="71"/>
                                     </constraint>
                                     <constraint firstItem="4K1-W9-9oJ" firstAttribute="leading" secondItem="jiI-2m-FLa" secondAttribute="trailing" constant="8" symbolic="YES" id="y1v-mN-arK"/>
                                 </constraints>
@@ -430,8 +430,8 @@
                                         <exclude reference="reC-cC-ezI"/>
                                         <exclude reference="ouH-MY-EmO"/>
                                         <exclude reference="chO-aE-dcO"/>
-                                        <exclude reference="Ixl-Qb-rvc"/>
                                         <exclude reference="TJH-ra-pgB"/>
+                                        <exclude reference="Ixl-Qb-rvc"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="AAw-kR-YGU"/>
@@ -479,8 +479,8 @@
                                         <include reference="reC-cC-ezI"/>
                                         <include reference="ouH-MY-EmO"/>
                                         <include reference="chO-aE-dcO"/>
-                                        <include reference="Ixl-Qb-rvc"/>
                                         <include reference="TJH-ra-pgB"/>
+                                        <include reference="Ixl-Qb-rvc"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="AAw-kR-YGU"/>
@@ -592,7 +592,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1357.5" y="361"/>
+            <point key="canvasLocation" x="1449" y="335"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Bg-CW-mhm">
