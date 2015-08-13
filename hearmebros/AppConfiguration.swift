@@ -13,157 +13,158 @@ class AppConfiguration {
     struct audioPath {
         // Hello
         // person1
-        static let hello1a: String = "AH0"
-        static let hello1b: String = "CURSING"
-        static let hello1c: String = "HELP"
+        static let hello1a: String = "HI_P0_01_01"
+        static let hello1b: String = "HI_P0_01_02"
+        static let hello1c: String = "HI_P0_01_03"
         
         // person2
-        static let hello2a: String = "HUH0"
-        static let hello2b: String = "HUH1"
-        static let hello2c: String = "HUH2"
+        static let hello2a: String = "HI_P0_02_01"
+        static let hello2b: String = "HI_P0_02_02"
+        static let hello2c: String = "HI_P0_02_03"
         
         // person3
-        static let hello3a: String = "HEY0"
-        static let hello3b: String = "HEY1"
-        static let hello3c: String = "HUH3"
+        static let hello3a: String = "HI_P0_03_01"
+        static let hello3b: String = "HI_P0_03_02"
+        static let hello3c: String = "HI_P0_03_03"
         
         // person4
-        static let hello4a: String = "OOOO"
-        static let hello4b: String = "OOPS0"
-        static let hello4c: String = "OOPS1"
+        static let hello4a: String = "HI_P0_04_01"
+        static let hello4b: String = "HI_P0_04_02"
+        static let hello4c: String = "HI_P0_04_03"
         
         // person5
-        static let hello5a: String = "HUH4"
-        static let hello5b: String = "NO0"
-        static let hello5c: String = "NO1"
+        static let hello5a: String = "HI_P0_05_01"
+        static let hello5b: String = "HI_P0_05_02"
+        static let hello5c: String = "HI_P0_05_03"
         
         // person6
-        static let hello6a: String = "WHAT2"
-        static let hello6b: String = "WOW0"
-        static let hello6c: String = "YAHOO"
+        static let hello6a: String = "HI_P0_06_01"
+        static let hello6b: String = "HI_P0_06_02"
+        static let hello6c: String = "HI_P0_06_03"
         
         // person7
-        static let hello7a: String = "YEAH1"
-        static let hello7b: String = "YEAH2"
-        static let hello7c: String = "YEAH4"
+        static let hello7a: String = "HI_P0_07_01"
+        static let hello7b: String = "HI_P0_07_02"
+        static let hello7c: String = "HI_P0_07_03"
         
         // Stop
         // person1
-        static let stop1a: String = "YEAH4"
-        static let stop1b: String = "ONEBLRN"
-        static let stop1c: String = "SMALBELL"
+        static let stop1a: String = "WARN_P0_01_01"
+        static let stop1b: String = "WARN_P0_01_02"
+        static let stop1c: String = "WARN_P0_01_03"
         
         // person2
-        static let stop2a: String = "SMBLRNG"
-        static let stop2b: String = "TINBELL"
-        static let stop2c: String = "TWOBELL"
+        static let stop2a: String = "WARN_P0_02_01"
+        static let stop2b: String = "WARN_P0_02_02"
+        static let stop2c: String = "WARN_P0_02_03"
         
         // person3
-        static let stop3a: String = "SCHLBELL"
-        static let stop3b: String = "SLOWSCAL"
-        static let stop3c: String = "SLWASCSC"
+        static let stop3a: String = "WARN_P0_03_01"
+        static let stop3b: String = "WARN_P0_03_02"
+        static let stop3c: String = "WARN_P0_03_03"
         
         // person4
-        static let stop4a: String = "FASTSCBL"
-        static let stop4b: String = "HISCALE"
-        static let stop4c: String = "MEDSCALE"
+        static let stop4a: String = "WARN_P0_04_01"
+        static let stop4b: String = "WARN_P0_04_02"
+        static let stop4c: String = "WARN_P0_04_03"
         
         // person5
-        static let stop5a: String = "CHIME3"
-        static let stop5b: String = "CHIME4"
-        static let stop5c: String = "CHRCHBL"
+        static let stop5a: String = "WARN_P0_05_01"
+        static let stop5b: String = "WARN_P0_05_02"
+        static let stop5c: String = "WARN_P0_05_03"
         
         // person6
-        static let stop6a: String = "BIGBLRNG"
-        static let stop6b: String = "CHIME2"
-        static let stop6c: String = "DESCBLSC"
+        static let stop6a: String = "WARN_P0_04_01"
+        static let stop6b: String = "WARN_P0_04_02"
+        static let stop6c: String = "WARN_P0_04_03"
         
         // person7
-        static let stop7a: String = "CHBELLS"
-        static let stop7b: String = "CHIME0"
-        static let stop7c: String = "CHIME1"
+        static let stop7a: String = "WARN_P0_05_01"
+        static let stop7b: String = "WARN_P0_05_02"
+        static let stop7c: String = "WARN_P0_05_03"
 
         
         // Answer
         // person1
-        static let ans1a: String = "3WATER"
-        static let ans1b: String = "CARTPOP"
-        static let ans1c: String = "DBLPOP"
-        static let ans1d: String = "FASTPOP"
+        static let ans1a: String = "ANS_P0_01_01"
+        static let ans1b: String = "ANS_P0_01_02"
+        static let ans1c: String = "ANS_P0_01_03"
+        static let ans1d: String = "ANS_P0_01_04"
         
-        static let ans1e: String = "HIGHPOP"
-        static let ans1f: String = "HOLOWPOP"
-        static let ans1g: String = "LONGPOP"
-        static let ans1h: String = "LOUDPOP"
+        static let ans1e: String = "ANS_P0_01_05"
+        static let ans1f: String = "ANS_P0_01_06"
+        static let ans1g: String = "ANS_P0_01_07"
+        static let ans1h: String = "ANS_P0_01_08"
         
         // person2
-        static let ans2a: String = "3WATER"
-        static let ans2b: String = "CARTPOP"
-        static let ans2c: String = "DBLPOP"
-        static let ans2d: String = "FASTPOP"
+        static let ans2a: String = "ANS_P0_02_01"
+        static let ans2b: String = "ANS_P0_02_02"
+        static let ans2c: String = "ANS_P0_02_03"
+        static let ans2d: String = "ANS_P0_02_04"
         
-        static let ans2e: String = "HIGHPOP"
-        static let ans2f: String = "HOLOWPOP"
-        static let ans2g: String = "LONGPOP"
-        static let ans2h: String = "LOUDPOP"
+        static let ans2e: String = "ANS_P0_02_05"
+        static let ans2f: String = "ANS_P0_02_06"
+        static let ans2g: String = "ANS_P0_02_07"
+        static let ans2h: String = "ANS_P0_02_08"
         
         // person3
-        static let ans3a: String = "3WATER"
-        static let ans3b: String = "CARTPOP"
-        static let ans3c: String = "DBLPOP"
-        static let ans3d: String = "FASTPOP"
+        static let ans3a: String = "ANS_P0_03_01"
+        static let ans3b: String = "ANS_P0_03_02"
+        static let ans3c: String = "ANS_P0_03_03"
+        static let ans3d: String = "ANS_P0_03_04"
         
-        static let ans3e: String = "HIGHPOP"
-        static let ans3f: String = "HOLOWPOP"
-        static let ans3g: String = "LONGPOP"
-        static let ans3h: String = "LOUDPOP"
+        static let ans3e: String = "ANS_P0_03_05"
+        static let ans3f: String = "ANS_P0_03_06"
+        static let ans3g: String = "ANS_P0_03_07"
+        static let ans3h: String = "ANS_P0_03_08"
         
         // person4
-        static let ans4a: String = "3WATER"
-        static let ans4b: String = "CARTPOP"
-        static let ans4c: String = "DBLPOP"
-        static let ans4d: String = "FASTPOP"
+        static let ans4a: String = "ANS_P0_04_01"
+        static let ans4b: String = "ANS_P0_04_02"
+        static let ans4c: String = "ANS_P0_04_03"
+        static let ans4d: String = "ANS_P0_04_04"
         
-        static let ans4e: String = "HIGHPOP"
-        static let ans4f: String = "HOLOWPOP"
-        static let ans4g: String = "LONGPOP"
-        static let ans4h: String = "LOUDPOP"
+        static let ans4e: String = "ANS_P0_04_05"
+        static let ans4f: String = "ANS_P0_04_06"
+        static let ans4g: String = "ANS_P0_04_07"
+        static let ans4h: String = "ANS_P0_04_08"
         
         // person5
-        static let ans5a: String = "3WATER"
-        static let ans5b: String = "CARTPOP"
-        static let ans5c: String = "DBLPOP"
-        static let ans5d: String = "FASTPOP"
+        static let ans5a: String = "ANS_P0_05_01"
+        static let ans5b: String = "ANS_P0_05_02"
+        static let ans5c: String = "ANS_P0_05_03"
+        static let ans5d: String = "ANS_P0_05_04"
         
-        static let ans5e: String = "HIGHPOP"
-        static let ans5f: String = "HOLOWPOP"
-        static let ans5g: String = "LONGPOP"
-        static let ans5h: String = "LOUDPOP"
+        static let ans5e: String = "ANS_P0_05_05"
+        static let ans5f: String = "ANS_P0_05_06"
+        static let ans5g: String = "ANS_P0_05_07"
+        static let ans5h: String = "ANS_P0_05_08"
         
         // person6
-        static let ans6a: String = "3WATER"
-        static let ans6b: String = "CARTPOP"
-        static let ans6c: String = "DBLPOP"
-        static let ans6d: String = "FASTPOP"
+        static let ans6a: String = "ANS_P0_06_01"
+        static let ans6b: String = "ANS_P0_06_02"
+        static let ans6c: String = "ANS_P0_06_03"
+        static let ans6d: String = "ANS_P0_06_04"
         
-        static let ans6e: String = "HIGHPOP"
-        static let ans6f: String = "HOLOWPOP"
-        static let ans6g: String = "LONGPOP"
-        static let ans6h: String = "LOUDPOP"
+        static let ans6e: String = "ANS_P0_06_05"
+        static let ans6f: String = "ANS_P0_06_06"
+        static let ans6g: String = "ANS_P0_06_07"
+        static let ans6h: String = "ANS_P0_06_08"
         
         // person7
-        static let ans7a: String = "3WATER"
-        static let ans7b: String = "CARTPOP"
-        static let ans7c: String = "DBLPOP"
-        static let ans7d: String = "FASTPOP"
+        static let ans7a: String = "ANS_P0_07_01"
+        static let ans7b: String = "ANS_P0_07_02"
+        static let ans7c: String = "ANS_P0_07_03"
+        static let ans7d: String = "ANS_P0_07_04"
         
-        static let ans7e: String = "HIGHPOP"
-        static let ans7f: String = "HOLOWPOP"
-        static let ans7g: String = "LONGPOP"
-        static let ans7h: String = "LOUDPOP"
+        static let ans7e: String = "ANS_P0_07_05"
+        static let ans7f: String = "ANS_P0_07_06"
+        static let ans7g: String = "ANS_P0_07_07"
+        static let ans7h: String = "ANS_P0_07_08"
         
-        static let startQ: String = "NO1"
-        static let startA: String = "HUH4"
+        static let startQ: String = "QUESTION"
+        static let endQ: String = "STOP_QUESTION"
+        static let startA: String = "ANSWER"
 
     }
     

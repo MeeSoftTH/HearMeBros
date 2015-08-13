@@ -45,6 +45,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var correctSound: Bool = false
     var recordSound: Bool = false
     var isShare: Bool = false
+    var isUpdateVisible: Bool = false
     
     var ansSelected: String = ""
     var imageSelected: String = ""
@@ -52,9 +53,14 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var fileDestinationUrl : NSURL = NSURL()
     var avalible = [Int]()
     var buttonIndexSelected: Int = 0
+    var countDown: Int = 10
+    var hiLastSelected: Int = 0
     
     var path: String = ""
+    var hiPath: String = ""
     var imagePath: String = ""
+    
+    var mode: String = ""
     
     var isSeleccted: Int = 0
     
@@ -67,8 +73,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var buttonIsOn6: Bool = false
     var buttonIsOn7: Bool = false
     
-    let startQ: String = AppConfiguration.audioPath.startQ
-    let startA: String = AppConfiguration.audioPath.startA
+    let quetion: String = AppConfiguration.audioPath.startQ
+    let endQuesion: String = AppConfiguration.audioPath.endQ
+    let answerQ: String = AppConfiguration.audioPath.startA
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +127,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     @IBAction func button3(sender: UIButton) {
-         self.changeColor(personButton3)
+        self.changeColor(personButton3)
         
         if isAskOn == true {
             self.sayHello(3)
@@ -136,7 +143,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     @IBAction func button4(sender: UIButton) {
-         self.changeColor(personButton4)
+        self.changeColor(personButton4)
         
         if isAskOn == true {
             self.sayHello(4)
@@ -232,10 +239,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     @IBAction func askThem(sender: UIButton) {
         if (sender.titleLabel?.text == "Ask"){
+            
+            self.resetState()
+            
             sender.setTitle("Asking", forState: .Normal)
             
             sender.setTitle("Stop", forState: .Normal)
-            self.soundRecorder.record()
+            
+            delay(1.0) {
+                self.audioPlayer(self.quetion)
+                self.mode = "REC"
+                self.acctionButton.enabled = false
+                
+            }
             
             self.resetColor()
             
@@ -251,6 +267,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             UnityAds.sharedInstance().delegate = self
             UnityAds.sharedInstance().startWithGameId("57599")
             
+            self.recordTime.text = "Recording 10"
+            
             self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
                 target:self,
                 selector:"updateAudioMeter:",
@@ -260,6 +278,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             soundRecorder.stop()
             sucessRecord()
             
+            delay(1.0) {
+                self.audioPlayer(self.endQuesion)
+            }
         }
     }
     
@@ -275,82 +296,90 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     func sayHello(index: Int) {
-        let person = index
-        let personSound = randomIndex(3, end: 1)
         
-        var hiPath: String = ""
-        
-        if person == 1 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello1a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello1b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello1c
-            }
-        }else if person == 2 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello2a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello2b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello2c
-            }
-        }else if person == 3 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello3a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello3b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello3c
-            }
-        }else if person == 4 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello4a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello4b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello4c
-            }
-        }else if person == 5 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello5a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello5b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello5c
-            }
-        }else if person == 6{
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello6a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello6b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello6c
-            }
-        }else if person == 7 {
-            if personSound == 1 {
-                hiPath = AppConfiguration.audioPath.hello7a
-            }else if personSound == 2 {
-                hiPath = AppConfiguration.audioPath.hello7b
-            }else if personSound == 3 {
-                hiPath = AppConfiguration.audioPath.hello7c
-            }
+        if self.hiLastSelected != index
+        {
+            let person = index
+            let personSound = randomIndex(3, end: 1)
+            self.hiLastSelected = index
             
+            self.hiPath = ""
+            
+            if person == 1 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello1a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello1b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello1c
+                }
+            }else if person == 2 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello2a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello2b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello2c
+                }
+            }else if person == 3 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello3a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello3b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello3c
+                }
+            }else if person == 4 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello4a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello4b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello4c
+                }
+            }else if person == 5 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello5a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello5b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello5c
+                }
+            }else if person == 6{
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello6a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello6b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello6c
+                }
+            }else if person == 7 {
+                if personSound == 1 {
+                    self.hiPath = AppConfiguration.audioPath.hello7a
+                }else if personSound == 2 {
+                    self.hiPath = AppConfiguration.audioPath.hello7b
+                }else if personSound == 3 {
+                    self.hiPath = AppConfiguration.audioPath.hello7c
+                }
+                
+            }
         }
-        self.audioPlayer(hiPath)
+        self.audioPlayer(self.hiPath)
     }
     
     func answer(index: Int) {
+        self.mode = "ANS"
+        self.topRightButton.enabled = false
         
-        let person = index
-        let personSound = randomIndex(8, end: 1)
-        
-        self.topRightButton.titleLabel?.text = "Share"
-        
-        if person == 1{
+        if self.isSeleccted != index {
             
-            if isSeleccted != 1 {
+            self.isSeleccted = index
+            
+            let person = index
+            let personSound = randomIndex(8, end: 1)
+            
+            if person == 1{
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans1a
                 }else if personSound == 2 {
@@ -371,11 +400,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans1On
-            }
-            
-        }else if person == 2 {
-            
-            if isSeleccted != 2 {
+                
+            }else if person == 2 {
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans2a
                 }else if personSound == 2 {
@@ -396,11 +423,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans2On
-            }
-            
-        }else if person == 3 {
-            
-            if isSeleccted != 3 {
+                
+            }else if person == 3 {
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans3a
                 }else if personSound == 2 {
@@ -421,11 +446,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans3On
-            }
-            
-        }else if person == 4 {
-            
-            if isSeleccted != 4 {
+                
+            }else if person == 4 {
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans4a
                 }else if personSound == 2 {
@@ -446,11 +469,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans4On
-            }
-            
-        }else if person == 5 {
-            
-            if isSeleccted != 5 {
+                
+            }else if person == 5 {
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans5a
                 }else if personSound == 2 {
@@ -471,11 +492,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans5On
-            }
-            
-        }else if person == 6 {
-            
-            if isSeleccted != 6 {
+                
+            }else if person == 6 {
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans6a
                 }else if personSound == 2 {
@@ -496,11 +514,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans6On
-            }
-            
-        }else if person == 7 {
-            
-            if isSeleccted != 7 {
+                
+            }else if person == 7 {
+                
                 if personSound == 1 {
                     self.path = AppConfiguration.audioPath.ans7a
                 }else if personSound == 2 {
@@ -521,12 +537,14 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 }
                 imagePath = AppConfiguration.imagePath.ans7On
             }
+            
         }
         
         self.audioPlayer(self.path)
         self.ansSelected = self.path
+        
         self.imageSelected = imagePath
-        self.isSeleccted = person
+        
         self.topRightButton.setTitle("Share", forState: .Normal)
     }
     
@@ -703,7 +721,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         if soundRecorder.recording {
             let sec = Int(soundRecorder.currentTime % 60)
             
-            recordTime.text = String(sec)
+            recordTime.text = "Recording \(String(self.countDown - sec))"
             soundRecorder.updateMeters()
             
             println("This time is \(sec)")
@@ -720,11 +738,15 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     func sucessRecord() {
         
-        self.acctionButton.enabled = false
-        self.acctionButton.backgroundColor = UIColor.grayColor()
-        self.statusLabel.text = "Select person for answer!"
+        delay(3.0) {
+            self.recordTime.text = "X people want to answer."
+        }
+        
+        //self.acctionButton.enabled = false
+        self.acctionButton.setTitle("Ask", forState: .Normal)
+        //self.acctionButton.backgroundColor = UIColor.grayColor()
         self.isAskOn = false
-        self.topRightButton.hidden = false
+        //self.topRightButton.hidden = false
         
         self.personButton1.enabled = true
         self.personButton2.enabled = true
@@ -755,202 +777,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             
         } else if isAskOn == false {
-            
-            var araryNum = self.avalible.count
-            
-            let buttonOn1 = self.avalible[0]
-            let buttonOn2 = self.avalible[1]
-            let buttonOn3 = self.avalible[2]
-
-            
-            self.personButton1.backgroundColor = UIColor.grayColor()
-            self.personButton2.backgroundColor = UIColor.grayColor()
-            self.personButton3.backgroundColor = UIColor.grayColor()
-            self.personButton4.backgroundColor = UIColor.grayColor()
-            
-            self.personButton5.backgroundColor = UIColor.grayColor()
-            self.personButton6.backgroundColor = UIColor.grayColor()
-            self.personButton7.backgroundColor = UIColor.grayColor()
-            
-            // update 1
-            if buttonOn1 == 1 {
-                self.personButton1.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 2 {
-                self.personButton2.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 3 {
-                self.personButton3.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 4 {
-                self.personButton4.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 5 {
-                self.personButton5.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 6 {
-                self.personButton6.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn1 == 7 {
-                self.personButton7.backgroundColor = UIColor.whiteColor()
-            }
-            
-            // update 2
-            if buttonOn2 == 1 {
-                self.personButton1.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 2 {
-                self.personButton2.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 3 {
-                self.personButton3.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 4 {
-                self.personButton4.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 5 {
-                self.personButton5.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 6 {
-                self.personButton6.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn2 == 7 {
-                self.personButton7.backgroundColor = UIColor.whiteColor()
-            }
-            
-            
-            // update 3
-            if buttonOn3 == 1 {
-                self.personButton1.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 2 {
-                self.personButton2.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 3 {
-                self.personButton3.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 4 {
-                self.personButton4.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 5 {
-                self.personButton5.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 6 {
-                self.personButton6.backgroundColor = UIColor.whiteColor()
-                
-            }else if buttonOn3 == 7 {
-                self.personButton7.backgroundColor = UIColor.whiteColor()
-            }
-            
-            
-            
-            if araryNum == 4 {
-                let buttonOn4 = self.avalible[3]
-                
-                // update 4
-                if buttonOn4 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
-                }
-            }
-            
-            if araryNum == 5 {
-                let buttonOn5 = self.avalible[4]
-                
-                // update 5
-                if buttonOn5 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
-                }
-            }
-            
-            if araryNum == 6 {
-                let buttonOn6 = self.avalible[5]
-                
-                // update 6
-                if buttonOn6 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
-                }
-            }
-            
-            if araryNum == 7 {
-                let buttonOn7 = self.avalible[6]
-                
-                // update 7
-                if buttonOn7 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
-                }
-            }
+            self.updateAnswerVisible()
         }
         buttonBackground.backgroundColor = UIColor.blueColor()
     }
@@ -999,10 +826,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             let newRecord = self.getStringFileURL(self.yourRecordSound)
             
-            var fileURL1 = NSBundle.mainBundle().URLForResource(self.startA, withExtension: "m4a")
+            var fileURL1 = NSBundle.mainBundle().URLForResource(self.quetion, withExtension: "m4a")
             var fileURL2 = NSURL(fileURLWithPath: newRecord)
             
-            var fileURL3 = NSBundle.mainBundle().URLForResource(self.startQ, withExtension: "m4a")
+            var fileURL3 = NSBundle.mainBundle().URLForResource(self.answerQ, withExtension: "m4a")
             var fileURL4 = NSBundle.mainBundle().URLForResource(self.ansSelected, withExtension: "m4a")
             
             self.makeAudio(fileURL1!, audio2: fileURL2!, audio3: fileURL3!, audio4: fileURL4!)
@@ -1097,7 +924,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         println("compositionAudioTrack2 = \(compositionAudioTrack2)")
         println("compositionAudioTrack3 = \(compositionAudioTrack3)")
         println("compositionAudioTrack4 = \(compositionAudioTrack4)")
+        
         if tracks1.count > 0 {
+            
             let insertRes1 = compositionAudioTrack1.insertTimeRange(timeRange1, ofTrack: assetTrack1, atTime: kCMTimeZero, error: nil)
             
             let insertRes2 = compositionAudioTrack2.insertTimeRange(timeRange2, ofTrack: assetTrack2, atTime: duration1, error: nil)
@@ -1119,7 +948,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     println("cancelled \(assetExport.error)")
                 case AVAssetExportSessionStatus.Completed:
                     println("complete")
-               
+                    
                     var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
                     let audioPath = documentDirectoryURL.URLByAppendingPathComponent("resultmerge.caf")
                     
@@ -1262,9 +1091,28 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 controller.setInitialText("Posting to Facebook by Hear Me Bros Apps")
                 controller.addURL(url)
                 
-                // 4
+                /*var URLinString = url.absoluteString
+                
+                let urlPath: NSURL = NSURL(fileURLWithPath: "https://graph.facebook.com/me/videos")!
+                
+                let resourcePath: NSString = NSString(string: URLinString!)
+                
+                let videoPath: NSURL = NSURL(fileURLWithPath: String(resourcePath), isDirectory: false)!
+                
+                let videoData: NSData = NSData(contentsOfURL: videoPath, options: nil, error: nil)!
+                
+                let status: NSString = "Posting to Facebook by Hear Me Bros Apps"
+                
+                let setParams: NSDictionary = ["title": status, "description": status]
+                
+   
+                let requset:SLRequest = SLRequest(forServiceType: SLServiceTypeFacebook, requestMethod: SLRequestMethod(rawValue: 1)!, URL: urlPath, parameters: setParams as [NSObject : AnyObject])
+                
+                requset.addMultipartData(videoData, withName: "source", type: "video/quicktime", filename: videoPath.absoluteString)*/
+
                 self.presentViewController(controller, animated:true, completion:nil)
             }
+                
             else {
                 // 3
                 let alertController = UIAlertController(title: "Alert", message:
@@ -1319,13 +1167,17 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     
     func updateAnswerVisible() {
-        var avalibelIndex = random3Visible()
         
-        println("Is visible = \(avalibelIndex)")
+        if self.isUpdateVisible == false {
+            random3Visible()
+            self.isUpdateVisible = true
+        }
         
-        let buttonOn1 = avalibelIndex[0]
-        let buttonOn2 = avalibelIndex[1]
-        let buttonOn3 = avalibelIndex[2]
+        println("Is visible = \(self.avalible)")
+        
+        let buttonOn1 = self.avalible[0]
+        let buttonOn2 = self.avalible[1]
+        let buttonOn3 = self.avalible[2]
         
         self.personButton1.backgroundColor = UIColor.grayColor()
         self.personButton2.backgroundColor = UIColor.grayColor()
@@ -1425,10 +1277,125 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.personButton7.backgroundColor = UIColor.whiteColor()
             self.buttonIsOn7 = true
         }
+        
+        var araryNum = self.avalible.count
+        
+        if araryNum > 3 {
+            
+            if araryNum == 4 {
+                let buttonOn4 = self.avalible[3]
+                
+                // update 4
+                if buttonOn4 == 1 {
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 2 {
+                    self.personButton2.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 3 {
+                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 4 {
+                    self.personButton4.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 5 {
+                    self.personButton5.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 6 {
+                    self.personButton6.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn4 == 7 {
+                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                }
+            }
+            
+            if araryNum == 5 {
+                let buttonOn5 = self.avalible[4]
+                
+                // update 5
+                if buttonOn5 == 1 {
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 2 {
+                    self.personButton2.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 3 {
+                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 4 {
+                    self.personButton4.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 5 {
+                    self.personButton5.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 6 {
+                    self.personButton6.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn5 == 7 {
+                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                }
+            }
+            
+            if araryNum == 6 {
+                let buttonOn6 = self.avalible[5]
+                
+                // update 6
+                if buttonOn6 == 1 {
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 2 {
+                    self.personButton2.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 3 {
+                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 4 {
+                    self.personButton4.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 5 {
+                    self.personButton5.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 6 {
+                    self.personButton6.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn6 == 7 {
+                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                }
+            }
+            
+            if araryNum == 7 {
+                let buttonOn7 = self.avalible[6]
+                
+                // update 7
+                if buttonOn7 == 1 {
+                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 2 {
+                    self.personButton2.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 3 {
+                    self.personButton3.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 4 {
+                    self.personButton4.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 5 {
+                    self.personButton5.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 6 {
+                    self.personButton6.backgroundColor = UIColor.whiteColor()
+                    
+                }else if buttonOn7 == 7 {
+                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                }
+            }
+        
+        }
+        
     }
     
     
-    func random3Visible() ->[Int] {
+    func random3Visible() {
         
         var index1: Int = 0
         var index2: Int = 0
@@ -1462,8 +1429,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         }
         
         println("Array is = \(self.avalible)")
-        
-        return avalible
     }
     
     func openAds() {
@@ -1571,6 +1536,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         UnityAds.sharedInstance().startWithGameId("57599")
         
         self.statusLabel.text = "Ask them"
+        self.recordTime.text = ""
         self.acctionButton.setTitle("Ask", forState: .Normal)
         self.isAskOn = true
         self.acctionButton.backgroundColor = UIColor.blueColor()
@@ -1595,5 +1561,40 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.personButton6.enabled = true
         self.personButton7.enabled = true
         
+    }
+    
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        if self.mode == "REC" {
+            self.acctionButton.enabled = true
+            self.mode = ""
+            println("Start rec")
+            self.soundRecorder.record()
+        }else if self.mode == "ANS" {
+            println("Enable Top Button")
+            self.topRightButton.hidden = false
+            self.topRightButton.enabled = true
+            self.mode = ""
+        }
+    }
+    
+    
+    // Dev test
+    @IBAction func devTest(sender: UIButton) {
+        
+        delay(1.0) {
+            
+            self.audioPlayer(self.quetion)
+            sleep(2)
+            
+            self.recordPlayer()
+            sleep(5)
+            
+            self.audioPlayer(self.answerQ)
+            sleep(2)
+            
+            self.audioPlayer(self.ansSelected)
+            
+        }
     }
 }
