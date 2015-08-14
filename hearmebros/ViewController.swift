@@ -1122,7 +1122,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 uploadRequest.addMultipartData(videoData, withName: "source", type: "video/quicktime", filename: pathURL.absoluteString)
                 
-                //uploadRequest.account = facebookAccount
+                uploadRequest.account = facebookAccount
                 
                 uploadRequest.performRequestWithHandler({
                     (responseData: NSData!,
