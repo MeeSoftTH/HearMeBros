@@ -12,6 +12,7 @@ import AudioToolbox
 import AssetsLibrary
 import MobileCoreServices
 import Social
+import Accounts
 
 class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UnityAdsDelegate {
     
@@ -242,7 +243,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             self.resetState()
             
-            sender.setTitle("Asking", forState: .Normal)
+            self.isUpdateVisible = false
             
             sender.setTitle("Stop", forState: .Normal)
             
@@ -925,9 +926,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         println("compositionAudioTrack3 = \(compositionAudioTrack3)")
         println("compositionAudioTrack4 = \(compositionAudioTrack4)")
         
-        if tracks1.count > 0 {
-            
-            let insertRes1 = compositionAudioTrack1.insertTimeRange(timeRange1, ofTrack: assetTrack1, atTime: kCMTimeZero, error: nil)
+        
+        let insertRes1 = compositionAudioTrack1.insertTimeRange(timeRange1, ofTrack: assetTrack1, atTime: kCMTimeZero, error: nil)
+        
+        if insertRes1 {
             
             let insertRes2 = compositionAudioTrack2.insertTimeRange(timeRange2, ofTrack: assetTrack2, atTime: duration1, error: nil)
             
@@ -936,33 +938,36 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             let insertRes4 = compositionAudioTrack4.insertTimeRange(timeRange4, ofTrack: assetTrack4, atTime: duration3, error: nil)
             
             
-            var assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
-            assetExport.outputFileType = AVFileTypeAppleM4A
-            assetExport.outputURL = fileDestinationUrl
-            
-            assetExport.exportAsynchronouslyWithCompletionHandler({
-                switch assetExport.status{
-                case  AVAssetExportSessionStatus.Failed:
-                    println("failed \(assetExport.error)")
-                case AVAssetExportSessionStatus.Cancelled:
-                    println("cancelled \(assetExport.error)")
-                case AVAssetExportSessionStatus.Completed:
-                    println("complete")
-                    
-                    var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
-                    let audioPath = documentDirectoryURL.URLByAppendingPathComponent("resultmerge.caf")
-                    
-                    let videoPath = documentDirectoryURL.URLByAppendingPathComponent("export.mov")
-                    
-                    
-                    println("Audio Path = \(audioPath)")
-                    
-                    self.createVideoWithImage(videoPath, audio: audioPath)
-                    
-                default:
-                    println("unknow error")
-                }
-            })
+            if insertRes1 {
+                println("success")
+                var assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
+                assetExport.outputFileType = AVFileTypeAppleM4A
+                assetExport.outputURL = fileDestinationUrl
+                
+                assetExport.exportAsynchronouslyWithCompletionHandler({
+                    switch assetExport.status{
+                    case  AVAssetExportSessionStatus.Failed:
+                        println("failed \(assetExport.error)")
+                    case AVAssetExportSessionStatus.Cancelled:
+                        println("cancelled \(assetExport.error)")
+                    case AVAssetExportSessionStatus.Completed:
+                        println("complete")
+                        
+                        var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
+                        let audioPath = documentDirectoryURL.URLByAppendingPathComponent("resultmerge.caf")
+                        
+                        let videoPath = documentDirectoryURL.URLByAppendingPathComponent("export.mov")
+                        
+                        
+                        println("Audio Path = \(audioPath)")
+                        
+                        self.createVideoWithImage(videoPath, audio: audioPath)
+                        
+                    default:
+                        println("unknow error")
+                    }
+                })
+            }
         }
     }
     
@@ -1088,32 +1093,49 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 var controller = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                 
                 // 3
-                controller.setInitialText("Posting to Facebook by Hear Me Bros Apps")
+                /*controller.setInitialText("Posting to Facebook by Hear Me Bros Apps")
                 controller.addURL(url)
+                self.presentViewController(controller, animated:true, completion:nil)*/
                 
-                /*var URLinString = url.absoluteString
+                var facebookAccount = ACAccount()
+                let accountStore: ACAccountStore = ACAccountStore.alloc()
                 
-                let urlPath: NSURL = NSURL(fileURLWithPath: "https://graph.facebook.com/me/videos")!
+                let facebookAccountType: ACAccountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierFacebook)
                 
-                let resourcePath: NSString = NSString(string: URLinString!)
+                let accounts: NSArray = accountStore.accountsWithAccountType(facebookAccountType)
+                facebookAccount = accounts.lastObject as! ACAccount
                 
-                let videoPath: NSURL = NSURL(fileURLWithPath: String(resourcePath), isDirectory: false)!
+                let videoURL: NSURL = NSURL(string: "https://graph.facebook.com/me/videos")!
+                //let filePath: NSString = NSBundle().URLForResource(url, withExtension: "mov")
+                let pathURL: NSURL = NSURL(fileURLWithPath: url.absoluteString!, isDirectory: false)!
+                let videoData: NSData = NSData(contentsOfURL: url)!
                 
-                let videoData: NSData = NSData(contentsOfURL: videoPath, options: nil, error: nil)!
+                let dictionary = ["title": "Post by Hear Me Bros App", "description": "www.meesoft.co.th"]
                 
-                let status: NSString = "Posting to Facebook by Hear Me Bros Apps"
                 
-                let setParams: NSDictionary = ["title": status, "description": status]
+                let uploadRequest = SLRequest(forServiceType:
+                    SLServiceTypeFacebook,
+                    requestMethod: SLRequestMethod.POST,
+                    URL: videoURL,
+                    parameters: dictionary)
                 
-   
-                let requset:SLRequest = SLRequest(forServiceType: SLServiceTypeFacebook, requestMethod: SLRequestMethod(rawValue: 1)!, URL: urlPath, parameters: setParams as [NSObject : AnyObject])
                 
-                requset.addMultipartData(videoData, withName: "source", type: "video/quicktime", filename: videoPath.absoluteString)*/
-
-                self.presentViewController(controller, animated:true, completion:nil)
-            }
+                uploadRequest.addMultipartData(videoData, withName: "source", type: "video/quicktime", filename: pathURL.absoluteString)
                 
-            else {
+                //uploadRequest.account = facebookAccount
+                
+                uploadRequest.performRequestWithHandler({
+                    (responseData: NSData!,
+                    urlResponse: NSHTTPURLResponse!,
+                    error: NSError!) -> Void in
+                    
+                    if let err = error {
+                        println("Error : \(err.localizedDescription)")
+                    }
+                    println("Facebook HTTP response \(urlResponse.statusCode)")
+                })
+                
+            }else {
                 // 3
                 let alertController = UIAlertController(title: "Alert", message:
                     "Sign to Facebook first!", preferredStyle: UIAlertControllerStyle.Alert)
@@ -1124,25 +1146,25 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
         }))
         
-        chooseDialog.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { (action: UIAlertAction!) in
-            
-            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
-                var tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                tweetSheet.setInitialText("Post by Hear Me Bros Apps")
-                tweetSheet.addURL(url)
-                
-                self.resetState()
-                
-                self.presentViewController(tweetSheet, animated: true, completion: nil)
-            } else {
-                let alertController = UIAlertController(title: "Alert", message:
-                    "Sign to Twitter first!", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default,handler: nil))
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-            
-        }))
+        /*chooseDialog.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { (action: UIAlertAction!) in
+        
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
+        var tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        tweetSheet.setInitialText("Post by Hear Me Bros Apps")
+        tweetSheet.addURL(url)
+        
+        self.resetState()
+        
+        self.presentViewController(tweetSheet, animated: true, completion: nil)
+        } else {
+        let alertController = UIAlertController(title: "Alert", message:
+        "Sign to Twitter first!", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+        })))*/
         
         chooseDialog.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
             self.topRightButton.enabled = true
@@ -1389,7 +1411,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     self.personButton7.backgroundColor = UIColor.whiteColor()
                 }
             }
-        
+            
         }
         
     }
