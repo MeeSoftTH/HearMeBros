@@ -1106,7 +1106,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 facebookAccount = accounts.lastObject as! ACAccount
                 
                 let videoURL: NSURL = NSURL(string: "https://graph.facebook.com/me/videos")!
-                //let filePath: NSString = NSBundle().URLForResource(url, withExtension: "mov")
+                let filePath: NSString = NSBundle().pathForResource(url.absoluteString, ofType: "mov")!
                 let pathURL: NSURL = NSURL(fileURLWithPath: url.absoluteString!, isDirectory: false)!
                 let videoData: NSData = NSData(contentsOfURL: url)!
                 
