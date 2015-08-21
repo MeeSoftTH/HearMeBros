@@ -56,6 +56,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var buttonIndexSelected: Int = 0
     var countDown: Int = 10
     var hiLastSelected: Int = 0
+    var answerArray = [Int]()
     
     var path: String = ""
     var hiPath: String = ""
@@ -276,12 +277,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 userInfo:nil,
                 repeats:true)
         } else if (sender.titleLabel?.text == "Stop"){
+            self.mode = "STOP"
             soundRecorder.stop()
             sucessRecord()
-            
-            delay(1.0) {
-                self.audioPlayer(self.endQuesion)
-            }
         }
     }
     
@@ -372,31 +370,33 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.mode = "ANS"
         self.topRightButton.enabled = false
         
+        
         if self.isSeleccted != index {
             
             self.isSeleccted = index
             
             let person = index
-            let personSound = randomIndex(8, end: 1)
+            
+            let soundIndex = self.answerArray
             
             if person == 1{
                 
-                if personSound == 1 {
+                if soundIndex[0] == 1 {
                     self.path = AppConfiguration.audioPath.ans1a
-                }else if personSound == 2 {
+                }else if soundIndex[0] == 2 {
                     self.path = AppConfiguration.audioPath.ans1b
-                }else if personSound == 3 {
+                }else if soundIndex[0] == 3 {
                     self.path = AppConfiguration.audioPath.ans1c
-                }else if personSound == 4 {
+                }else if soundIndex[0] == 4 {
                     self.path = AppConfiguration.audioPath.ans1d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[0] == 5 {
                     self.path = AppConfiguration.audioPath.ans1e
-                }else if personSound == 6 {
+                }else if soundIndex[0] == 6 {
                     self.path = AppConfiguration.audioPath.ans1f
-                }else if personSound == 7 {
+                }else if soundIndex[0] == 7 {
                     self.path = AppConfiguration.audioPath.ans1g
-                }else if personSound == 8 {
+                }else if soundIndex[0] == 8 {
                     self.path = AppConfiguration.audioPath.ans1h
                 }
                 
@@ -404,22 +404,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             }else if person == 2 {
                 
-                if personSound == 1 {
+                if soundIndex[1] == 1 {
                     self.path = AppConfiguration.audioPath.ans2a
-                }else if personSound == 2 {
+                }else if soundIndex[1] == 2 {
                     self.path = AppConfiguration.audioPath.ans2b
-                }else if personSound == 3 {
+                }else if soundIndex[1] == 3 {
                     self.path = AppConfiguration.audioPath.ans2c
-                }else if personSound == 4 {
+                }else if soundIndex[1] == 4 {
                     self.path = AppConfiguration.audioPath.ans2d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[1] == 5 {
                     self.path = AppConfiguration.audioPath.ans2e
-                }else if personSound == 6 {
+                }else if soundIndex[1] == 6 {
                     self.path = AppConfiguration.audioPath.ans2f
-                }else if personSound == 7 {
+                }else if soundIndex[1] == 7 {
                     self.path = AppConfiguration.audioPath.ans2g
-                }else if personSound == 8 {
+                }else if soundIndex[1] == 8 {
                     self.path = AppConfiguration.audioPath.ans2h
                 }
                 
@@ -427,22 +427,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             }else if person == 3 {
                 
-                if personSound == 1 {
+                if soundIndex[2] == 1 {
                     self.path = AppConfiguration.audioPath.ans3a
-                }else if personSound == 2 {
+                }else if soundIndex[2] == 2 {
                     self.path = AppConfiguration.audioPath.ans3b
-                }else if personSound == 3 {
+                }else if soundIndex[2] == 3 {
                     self.path = AppConfiguration.audioPath.ans3c
-                }else if personSound == 4 {
+                }else if soundIndex[2] == 4 {
                     self.path = AppConfiguration.audioPath.ans3d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[2] == 5 {
                     self.path = AppConfiguration.audioPath.ans3e
-                }else if personSound == 6 {
+                }else if soundIndex[2] == 6 {
                     self.path = AppConfiguration.audioPath.ans3f
-                }else if personSound == 7 {
+                }else if soundIndex[2] == 7 {
                     self.path = AppConfiguration.audioPath.ans3g
-                }else if personSound == 8 {
+                }else if soundIndex[2] == 8 {
                     self.path = AppConfiguration.audioPath.ans3h
                 }
                 
@@ -450,22 +450,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             }else if person == 4 {
                 
-                if personSound == 1 {
+                if soundIndex[3] == 1 {
                     self.path = AppConfiguration.audioPath.ans4a
-                }else if personSound == 2 {
+                }else if soundIndex[3] == 2 {
                     self.path = AppConfiguration.audioPath.ans4b
-                }else if personSound == 3 {
+                }else if soundIndex[3] == 3 {
                     self.path = AppConfiguration.audioPath.ans4c
-                }else if personSound == 4 {
+                }else if soundIndex[3] == 4 {
                     self.path = AppConfiguration.audioPath.ans4d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[3] == 5 {
                     self.path = AppConfiguration.audioPath.ans4e
-                }else if personSound == 6 {
+                }else if soundIndex[3] == 6 {
                     self.path = AppConfiguration.audioPath.ans4f
-                }else if personSound == 7 {
+                }else if soundIndex[3] == 7 {
                     self.path = AppConfiguration.audioPath.ans4g
-                }else if personSound == 8 {
+                }else if soundIndex[3] == 8 {
                     self.path = AppConfiguration.audioPath.ans4h
                 }
                 
@@ -473,44 +473,44 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             }else if person == 5 {
                 
-                if personSound == 1 {
+                if soundIndex[4] == 1 {
                     self.path = AppConfiguration.audioPath.ans5a
-                }else if personSound == 2 {
+                }else if soundIndex[4] == 2 {
                     self.path = AppConfiguration.audioPath.ans5b
-                }else if personSound == 3 {
+                }else if soundIndex[4] == 3 {
                     self.path = AppConfiguration.audioPath.ans5c
-                }else if personSound == 4 {
+                }else if soundIndex[4] == 4 {
                     self.path = AppConfiguration.audioPath.ans5d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[4] == 5 {
                     self.path = AppConfiguration.audioPath.ans5e
-                }else if personSound == 6 {
+                }else if soundIndex[4] == 6 {
                     self.path = AppConfiguration.audioPath.ans5f
-                }else if personSound == 7 {
+                }else if soundIndex[4] == 7 {
                     self.path = AppConfiguration.audioPath.ans5g
-                }else if personSound == 8 {
+                }else if soundIndex[4] == 8 {
                     self.path = AppConfiguration.audioPath.ans5h
                 }
                 
                 imagePath = AppConfiguration.imagePath.ans5On
                 
-            }else if person == 6 {
-                if personSound == 1 {
+            }else if soundIndex[5] == 6 {
+                if soundIndex[5] == 1 {
                     self.path = AppConfiguration.audioPath.ans6a
-                }else if personSound == 2 {
+                }else if soundIndex[5] == 2 {
                     self.path = AppConfiguration.audioPath.ans6b
-                }else if personSound == 3 {
+                }else if soundIndex[5] == 3 {
                     self.path = AppConfiguration.audioPath.ans6c
-                }else if personSound == 4 {
+                }else if soundIndex[5] == 4 {
                     self.path = AppConfiguration.audioPath.ans6d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[5] == 5 {
                     self.path = AppConfiguration.audioPath.ans6e
-                }else if personSound == 6 {
+                }else if soundIndex[5] == 6 {
                     self.path = AppConfiguration.audioPath.ans6f
-                }else if personSound == 7 {
+                }else if soundIndex[5] == 7 {
                     self.path = AppConfiguration.audioPath.ans6g
-                }else if personSound == 8 {
+                }else if soundIndex[5] == 8 {
                     self.path = AppConfiguration.audioPath.ans6h
                 }
                 
@@ -518,33 +518,31 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             }else if person == 7 {
                 
-                if personSound == 1 {
+                if soundIndex[6] == 1 {
                     self.path = AppConfiguration.audioPath.ans7a
-                }else if personSound == 2 {
+                }else if soundIndex[6] == 2 {
                     self.path = AppConfiguration.audioPath.ans7b
-                }else if personSound == 3 {
+                }else if soundIndex[6] == 3 {
                     self.path = AppConfiguration.audioPath.ans7c
-                }else if personSound == 4 {
+                }else if soundIndex[6] == 4 {
                     self.path = AppConfiguration.audioPath.ans7d
                     
-                }else if personSound == 5 {
+                }else if soundIndex[6] == 5 {
                     self.path = AppConfiguration.audioPath.ans7e
-                }else if personSound == 6 {
+                }else if soundIndex[6] == 6 {
                     self.path = AppConfiguration.audioPath.ans7f
-                }else if personSound == 7 {
+                }else if soundIndex[6] == 7 {
                     self.path = AppConfiguration.audioPath.ans7g
-                }else if personSound == 8 {
+                }else if soundIndex[6] == 8 {
                     self.path = AppConfiguration.audioPath.ans7h
                 }
                 imagePath = AppConfiguration.imagePath.ans7On
             }
-            
         }
         
-        self.audioPlayer(self.path)
         self.ansSelected = self.path
-        
         self.imageSelected = imagePath
+        self.audioPlayer(self.path)
         
         self.topRightButton.setTitle("Share", forState: .Normal)
     }
@@ -730,18 +728,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             if sec == 10 {
                 soundRecorder.stop()
                 sayStop()
-                delay(1.0){
-                    self.sucessRecord()
-                }
+                
             }
         }
     }
     
     func sucessRecord() {
-        
-        delay(3.0) {
-            self.recordTime.text = "X people want to answer."
-        }
         
         //self.acctionButton.enabled = false
         self.acctionButton.setTitle("Ask", forState: .Normal)
@@ -758,13 +750,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.personButton6.enabled = true
         self.personButton7.enabled = true
         
+        self.random7Answer()
         self.updateAnswerVisible()
         
         println("This time is CLICK")
     }
     
     func changeColor(buttonBackground: UIButton) {
-        
         
         if isAskOn == true {
             self.personButton1.backgroundColor = UIColor.whiteColor()
@@ -775,7 +767,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.personButton5.backgroundColor = UIColor.whiteColor()
             self.personButton6.backgroundColor = UIColor.whiteColor()
             self.personButton7.backgroundColor = UIColor.whiteColor()
-            
             
         } else if isAskOn == false {
             self.updateAnswerVisible()
@@ -1210,6 +1201,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.personButton6.backgroundColor = UIColor.grayColor()
         self.personButton7.backgroundColor = UIColor.grayColor()
         
+        delay(1.0) {
+            self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
+        }
+        
         // update 1
         if buttonOn1 == 1 {
             self.personButton1.backgroundColor = UIColor.whiteColor()
@@ -1411,11 +1406,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     self.personButton7.backgroundColor = UIColor.whiteColor()
                 }
             }
-            
         }
-        
     }
-    
     
     func random3Visible() {
         
@@ -1453,7 +1445,32 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         println("Array is = \(self.avalible)")
     }
     
+    
+    
+    func random7Answer() {
+        
+        var index1: Int = 0
+        var index2: Int = 0
+        var index3: Int = 0
+        
+        var index4: Int = 0
+        var index5: Int = 0
+        var index6: Int = 0
+        var index7: Int = 0
+        
+        for var i = 0; i < 7; i++ {
+            
+            let randomAnswer = randomIndex(8, end:1)
+
+            self.answerArray.append(randomAnswer)
+        }
+        
+        println("random7Answer is = \(self.answerArray)")
+    }
+
+    
     func openAds() {
+        
         UnityAds.sharedInstance().setViewController(self)
         UnityAds.sharedInstance().setZone("rewardedVideoZone")
         
@@ -1463,12 +1480,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             refreshAlert.addAction(UIAlertAction(title: "Watch", style: .Default, handler: { (action: UIAlertAction!) in
                 
                 UnityAds.sharedInstance().show()
-                
             }))
             
-            refreshAlert.addAction(UIAlertAction(title: "Nothing", style: .Default, handler: { (action: UIAlertAction!) in
-                
-            }))
+            refreshAlert.addAction(UIAlertAction(title: "Nothing", style: .Default, handler: nil))
             
             self.presentViewController(refreshAlert, animated: true, completion: nil)
         }else {
@@ -1514,6 +1528,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             }else if self.buttonIndexSelected == 7 {
                 self.changeColor(self.personButton7)
                 self.buttonIsOn7 = true
+            }
+            
+            delay(1.0) {
+                self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
             }
         }
     }
@@ -1597,9 +1615,15 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.topRightButton.hidden = false
             self.topRightButton.enabled = true
             self.mode = ""
+        }else if self.mode == "STOP" {
+            delay(1.0){
+                self.sucessRecord()
+            }
         }
+        
+        self.mode = ""
     }
-    
+
     
     // Dev test
     @IBAction func devTest(sender: UIButton) {
