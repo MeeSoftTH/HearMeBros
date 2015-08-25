@@ -279,7 +279,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         } else if (sender.titleLabel?.text == "Stop"){
             self.mode = "STOP"
             soundRecorder.stop()
-            sucessRecord()
+            self.audioPlayer(self.endQuesion)
         }
     }
     
@@ -613,6 +613,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         }
         
         self.audioPlayer(stopPath)
+        self.mode = "STOP"
         
     }
     
@@ -655,7 +656,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         var error: NSError?
         
-        soundPlayer = AVAudioPlayer(contentsOfURL: getFileURL(yourRecordSound), error: &error)
+        soundPlayer = AVAudioPlayer(contentsOfURL: getFileURL(self.yourRecordSound), error: &error)
         
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         
@@ -692,7 +693,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         var error: NSError?
         
-        soundRecorder = AVAudioRecorder(URL: getFileURL(yourRecordSound), settings: recordSettings as [NSObject : AnyObject], error: &error)
+        soundRecorder = AVAudioRecorder(URL: getFileURL(self.yourRecordSound), settings: recordSettings as [NSObject : AnyObject], error: &error)
         
         if let err = error {
             println("AVAudioRecorder error: \(err.localizedDescription)")
@@ -728,7 +729,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             if sec == 10 {
                 soundRecorder.stop()
                 sayStop()
-                
             }
         }
     }
@@ -784,9 +784,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.acctionButton.setTitle("Waiting", forState: .Normal)
         self.acctionButton.enabled = false
         
-        
-        println("Start process")
-        self.makeVideo()
+        if self.imageSelected != "" {
+            println("Start process")
+            self.makeVideo()
+        }
     }
     
     func getStringFileURL(fileName: String) -> String {
@@ -823,6 +824,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             var fileURL3 = NSBundle.mainBundle().URLForResource(self.answerQ, withExtension: "m4a")
             var fileURL4 = NSBundle.mainBundle().URLForResource(self.ansSelected, withExtension: "m4a")
+            
+            println("A1: \(fileURL1)")
+            println("A2: \(fileURL2)")
+            println("A3: \(fileURL3)")
+            println("A4: \(fileURL4)")
             
             self.makeAudio(fileURL1!, audio2: fileURL2!, audio3: fileURL3!, audio4: fileURL4!)
         })
@@ -878,12 +884,18 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             println("no file")
         }
         
-        // Do combine two files.
-        var tracks1 =  AVURLAsset(URL: audio1, options: nil).tracksWithMediaType(AVMediaTypeAudio)
-        var tracks2 =  AVURLAsset(URL: audio2, options: nil).tracksWithMediaType(AVMediaTypeAudio)
+        // Do combine four files.
+        let audioAsset1 = AVURLAsset(URL: audio1, options: nil)
+        let audioAsset2 = AVURLAsset(URL: audio2, options: nil)
+        let audioAsset3 = AVURLAsset(URL: audio3, options: nil)
+        let audioAsset4 = AVURLAsset(URL: audio4, options: nil)
         
-        var tracks3 =  AVURLAsset(URL: audio3, options: nil).tracksWithMediaType(AVMediaTypeAudio)
-        var tracks4 =  AVURLAsset(URL: audio4, options: nil).tracksWithMediaType(AVMediaTypeAudio)
+        let tracks1 =  audioAsset1.tracksWithMediaType(AVMediaTypeAudio)
+        let tracks2 =  audioAsset2.tracksWithMediaType(AVMediaTypeAudio)
+        
+        let tracks3 =  audioAsset3.tracksWithMediaType(AVMediaTypeAudio)
+        let tracks4 =  audioAsset4.tracksWithMediaType(AVMediaTypeAudio)
+        
         
         var assetTrack1:AVAssetTrack = tracks1[0] as! AVAssetTrack
         var assetTrack2:AVAssetTrack = tracks2[0] as! AVAssetTrack
@@ -891,34 +903,27 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         var assetTrack3:AVAssetTrack = tracks3[0] as! AVAssetTrack
         var assetTrack4:AVAssetTrack = tracks4[0] as! AVAssetTrack
         
+        let duration1: CMTime = assetTrack1.timeRange.duration
+        let duration2: CMTime = assetTrack2.timeRange.duration
         
-        println(tracks1)
-        println(tracks2)
+        let duration3: CMTime = assetTrack3.timeRange.duration
+        let duration4: CMTime = assetTrack4.timeRange.duration
         
-        println(tracks3)
-        println(tracks4)
+        let timeRange1 = CMTimeRangeMake(kCMTimeZero, duration1)
+        let timeRange2 = CMTimeRangeMake(kCMTimeZero, duration2)
         
+        let timeRange3 = CMTimeRangeMake(kCMTimeZero, duration3)
+        let timeRange4 = CMTimeRangeMake(kCMTimeZero, duration4)
         
-        var duration1: CMTime = assetTrack1.timeRange.duration
-        var duration2: CMTime = assetTrack2.timeRange.duration
-        
-        var duration3: CMTime = assetTrack3.timeRange.duration
-        var duration4: CMTime = assetTrack4.timeRange.duration
-        
-        var timeRange1 = CMTimeRangeMake(kCMTimeZero, duration1)
-        var timeRange2 = CMTimeRangeMake(kCMTimeZero, duration2)
-        
-        var timeRange3 = CMTimeRangeMake(kCMTimeZero, duration3)
-        var timeRange4 = CMTimeRangeMake(kCMTimeZero, duration4)
-        
-        
-        println("compositionAudioTrack1 = \(compositionAudioTrack1)")
-        println("compositionAudioTrack2 = \(compositionAudioTrack2)")
-        println("compositionAudioTrack3 = \(compositionAudioTrack3)")
-        println("compositionAudioTrack4 = \(compositionAudioTrack4)")
-        
+        println("duration1 = \(assetTrack1.timeRange.duration)")
+        println("duration2 = \(assetTrack2.timeRange.duration)")
+        println("duration3 = \(assetTrack3.timeRange.duration)")
+        println("duration4 = \(assetTrack4.timeRange.duration)")
         
         let insertRes1 = compositionAudioTrack1.insertTimeRange(timeRange1, ofTrack: assetTrack1, atTime: kCMTimeZero, error: nil)
+        
+        println("insertRes = \(insertRes1)")
+        
         
         if insertRes1 {
             
@@ -1022,7 +1027,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         let assetTrack2:AVAssetTrack = audios[0] as! AVAssetTrack
         
         var duration1: CMTime = assetTrack1.timeRange.duration
-        println(duration1.value)
         var duration2: CMTime = assetTrack2.timeRange.duration
         
         var timeRange1 = CMTimeRangeMake(kCMTimeZero, duration1)
@@ -1038,7 +1042,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 println("success")
                 
                 var assetExport = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)
-                assetExport.outputFileType = AVFileTypeMPEG4// AVFileTypeAppleM4A
+                assetExport.outputFileType = AVFileTypeMPEG4
                 assetExport.outputURL = fileDestinationUrl
                 assetExport.exportAsynchronouslyWithCompletionHandler({
                     switch assetExport.status{
@@ -1461,13 +1465,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         for var i = 0; i < 7; i++ {
             
             let randomAnswer = randomIndex(8, end:1)
-
+            
             self.answerArray.append(randomAnswer)
         }
         
         println("random7Answer is = \(self.answerArray)")
     }
-
+    
     
     func openAds() {
         
@@ -1623,7 +1627,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         self.mode = ""
     }
-
+    
     
     // Dev test
     @IBAction func devTest(sender: UIButton) {
