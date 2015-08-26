@@ -51,6 +51,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var ansSelected: String = ""
     var imageSelected: String = ""
     var yourRecordSound: String = "recorder.m4a"
+    var tempAudio1 = "tempAudio1.caf"
+    var tempAudio2 = "tempAudio2.caf"
     var fileDestinationUrl : NSURL = NSURL()
     var avalible = [Int]()
     var buttonIndexSelected: Int = 0
@@ -230,7 +232,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.personButton6.enabled = false
             self.personButton7.enabled = false
             
-            self.statusLabel.text = "Process..."
+            self.statusLabel.text = "Processing..."
             self.actionIndicator.hidden = false
             self.actionIndicator.startAnimating()
             self.acctionButton.enabled = false
@@ -285,13 +287,47 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     func resetColor() {
         self.personButton1.backgroundColor = UIColor.whiteColor()
+        self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton1.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton1.layer.cornerRadius = 20.0;
+        
         self.personButton2.backgroundColor = UIColor.whiteColor()
+        self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton2.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton2.layer.cornerRadius = 20.0;
+        
         self.personButton3.backgroundColor = UIColor.whiteColor()
+        self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton3.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton3.layer.cornerRadius = 20.0;
+        
         self.personButton4.backgroundColor = UIColor.whiteColor()
+        self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton4.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton4.layer.cornerRadius = 20.0;
+        
         
         self.personButton5.backgroundColor = UIColor.whiteColor()
+        self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton5.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton5.layer.cornerRadius = 20.0;
+        
         self.personButton6.backgroundColor = UIColor.whiteColor()
+        self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton6.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton6.layer.cornerRadius = 20.0;
+        
         self.personButton7.backgroundColor = UIColor.whiteColor()
+        self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton7.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton7.layer.cornerRadius = 20.0;
     }
     
     func sayHello(index: Int) {
@@ -494,7 +530,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
                 imagePath = AppConfiguration.imagePath.ans5On
                 
-            }else if soundIndex[5] == 6 {
+            }else if person == 6 {
                 if soundIndex[5] == 1 {
                     self.path = AppConfiguration.audioPath.ans6a
                 }else if soundIndex[5] == 2 {
@@ -760,18 +796,61 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         if isAskOn == true {
             self.personButton1.backgroundColor = UIColor.whiteColor()
+            self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton1.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton1.layer.cornerRadius = 20.0;
+            
             self.personButton2.backgroundColor = UIColor.whiteColor()
+            self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton2.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton2.layer.cornerRadius = 20.0;
+            
             self.personButton3.backgroundColor = UIColor.whiteColor()
+            self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton3.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton3.layer.cornerRadius = 20.0;
+            
             self.personButton4.backgroundColor = UIColor.whiteColor()
+            self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton4.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton4.layer.cornerRadius = 20.0;
+            
             
             self.personButton5.backgroundColor = UIColor.whiteColor()
+            self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton5.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton5.layer.cornerRadius = 20.0;
+            
             self.personButton6.backgroundColor = UIColor.whiteColor()
+            self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton6.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton6.layer.cornerRadius = 20.0;
+            
             self.personButton7.backgroundColor = UIColor.whiteColor()
+            self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
+            self.personButton7.layer.borderWidth = 3.0
+            // Set image corner radius
+            self.personButton7.layer.cornerRadius = 20.0;
+
             
         } else if isAskOn == false {
             self.updateAnswerVisible()
         }
-        buttonBackground.backgroundColor = UIColor.blueColor()
+        
+        //buttonBackground.backgroundColor = UIColor.blueColor()
+        
+        // Create a white border with defined width
+        buttonBackground.layer.borderColor = UIColor.blueColor().CGColor
+        buttonBackground.layer.borderWidth = 3.0
+        
+        // Set image corner radius
+        buttonBackground.layer.cornerRadius = 20.0;
     }
     
     
@@ -799,11 +878,14 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         var frames: NSMutableArray = []
         var iconImg = UIImage(named: self.imageSelected)!
         
+        
+        println("IMAGE PATH = \(self.imageSelected)")
+        
         println(iconImg.size.width)
         println(iconImg.size.height)
         
-        let newHeight = iconImg.size.height > 64 ? iconImg.size.height : 64
-        let newWidth = iconImg.size.width > 320.0 ? iconImg.size.width : 320.0
+        let newHeight = iconImg.size.height
+        let newWidth = iconImg.size.width
         
         var settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: newWidth, andHeight: newHeight)
         
@@ -822,29 +904,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             var fileURL1 = NSBundle.mainBundle().URLForResource(self.quetion, withExtension: "m4a")
             var fileURL2 = NSURL(fileURLWithPath: newRecord)
             
-            var fileURL3 = NSBundle.mainBundle().URLForResource(self.answerQ, withExtension: "m4a")
-            var fileURL4 = NSBundle.mainBundle().URLForResource(self.ansSelected, withExtension: "m4a")
-            
             println("A1: \(fileURL1)")
             println("A2: \(fileURL2)")
-            println("A3: \(fileURL3)")
-            println("A4: \(fileURL4)")
             
-            self.makeAudio(fileURL1!, audio2: fileURL2!, audio3: fileURL3!, audio4: fileURL4!)
+            self.mergeTwoAudios(fileURL1!, audio2: fileURL2!, tempSound: self.tempAudio1, index: 0)
         })
     }
     
-    func makeAudio(audio1: NSURL, audio2:  NSURL, audio3: NSURL, audio4:  NSURL) {
-        var tempPath = "resultmerge.caf"
+    
+    
+    func mergeTwoAudios(audio1: NSURL, audio2:  NSURL, tempSound: String, index: Int) {
+        var tempPath = tempSound
         //Create AVMutableComposition Object.This object will hold our multiple AVMutableCompositionTrack.
         var composition = AVMutableComposition()
         var compositionAudioTrack1:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
         
         var compositionAudioTrack2:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
-        
-        var compositionAudioTrack3:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
-        
-        var compositionAudioTrack4:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
         
         //create new file to receive data
         var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
@@ -887,54 +962,31 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         // Do combine four files.
         let audioAsset1 = AVURLAsset(URL: audio1, options: nil)
         let audioAsset2 = AVURLAsset(URL: audio2, options: nil)
-        let audioAsset3 = AVURLAsset(URL: audio3, options: nil)
-        let audioAsset4 = AVURLAsset(URL: audio4, options: nil)
         
         let tracks1 =  audioAsset1.tracksWithMediaType(AVMediaTypeAudio)
         let tracks2 =  audioAsset2.tracksWithMediaType(AVMediaTypeAudio)
-        
-        let tracks3 =  audioAsset3.tracksWithMediaType(AVMediaTypeAudio)
-        let tracks4 =  audioAsset4.tracksWithMediaType(AVMediaTypeAudio)
         
         
         var assetTrack1:AVAssetTrack = tracks1[0] as! AVAssetTrack
         var assetTrack2:AVAssetTrack = tracks2[0] as! AVAssetTrack
         
-        var assetTrack3:AVAssetTrack = tracks3[0] as! AVAssetTrack
-        var assetTrack4:AVAssetTrack = tracks4[0] as! AVAssetTrack
-        
         let duration1: CMTime = assetTrack1.timeRange.duration
         let duration2: CMTime = assetTrack2.timeRange.duration
-        
-        let duration3: CMTime = assetTrack3.timeRange.duration
-        let duration4: CMTime = assetTrack4.timeRange.duration
         
         let timeRange1 = CMTimeRangeMake(kCMTimeZero, duration1)
         let timeRange2 = CMTimeRangeMake(kCMTimeZero, duration2)
         
-        let timeRange3 = CMTimeRangeMake(kCMTimeZero, duration3)
-        let timeRange4 = CMTimeRangeMake(kCMTimeZero, duration4)
-        
-        println("duration1 = \(assetTrack1.timeRange.duration)")
-        println("duration2 = \(assetTrack2.timeRange.duration)")
-        println("duration3 = \(assetTrack3.timeRange.duration)")
-        println("duration4 = \(assetTrack4.timeRange.duration)")
+        println("duration1 = \(duration1)")
+        println("duration2 = \(duration2)")
         
         let insertRes1 = compositionAudioTrack1.insertTimeRange(timeRange1, ofTrack: assetTrack1, atTime: kCMTimeZero, error: nil)
         
         println("insertRes = \(insertRes1)")
         
-        
         if insertRes1 {
-            
             let insertRes2 = compositionAudioTrack2.insertTimeRange(timeRange2, ofTrack: assetTrack2, atTime: duration1, error: nil)
             
-            let insertRes3 = compositionAudioTrack3.insertTimeRange(timeRange3, ofTrack: assetTrack3, atTime: duration2, error: nil)
-            
-            let insertRes4 = compositionAudioTrack4.insertTimeRange(timeRange4, ofTrack: assetTrack4, atTime: duration3, error: nil)
-            
-            
-            if insertRes1 {
+            if insertRes2 {
                 println("success")
                 var assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
                 assetExport.outputFileType = AVFileTypeAppleM4A
@@ -949,15 +1001,38 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     case AVAssetExportSessionStatus.Completed:
                         println("complete")
                         
-                        var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
-                        let audioPath = documentDirectoryURL.URLByAppendingPathComponent("resultmerge.caf")
                         
-                        let videoPath = documentDirectoryURL.URLByAppendingPathComponent("export.mov")
+                        if index == 0 {
+                            
+                            var fileURL3 = NSBundle.mainBundle().URLForResource(self.answerQ, withExtension: "m4a")
+                            var fileURL4 = NSBundle.mainBundle().URLForResource(self.ansSelected, withExtension: "m4a")
+                            
+                            self.mergeTwoAudios(fileURL3!, audio2: fileURL4!, tempSound: self.tempAudio2, index: 1)
+                            
+                        }else if index == 1 {
+                            
+                            let filePath1 = documentDirectoryURL.URLByAppendingPathComponent(self.tempAudio1)
+                            
+                            let filePath2 = documentDirectoryURL.URLByAppendingPathComponent(self.tempAudio2)
+                            
+                            
+                            self.mergeTwoAudios(filePath1, audio2: filePath2, tempSound: "resultmerge.caf", index: 2)
+                            
+                        }else if index == 2{
+                            
+                            var documentDirectoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as! NSURL
+                            
+                            let audioPath = documentDirectoryURL.URLByAppendingPathComponent("resultmerge.caf")
+                            
+                            let videoPath = documentDirectoryURL.URLByAppendingPathComponent("export.mov")
+                            
+                            
+                            println("Audio Path = \(audioPath)")
+                            
+                            self.createVideoWithImage(videoPath, audio: audioPath)
+                            
+                        }
                         
-                        
-                        println("Audio Path = \(audioPath)")
-                        
-                        self.createVideoWithImage(videoPath, audio: audioPath)
                         
                     default:
                         println("unknow error")
@@ -1134,7 +1209,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 // 3
                 let alertController = UIAlertController(title: "Alert", message:
                     "Sign to Facebook first!", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default,handler: nil))
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { (action: UIAlertAction!) in
+                    self.topRightButton.enabled = true
+                    self.resetState()
+                }))
                 
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
@@ -1205,6 +1284,43 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.personButton6.backgroundColor = UIColor.grayColor()
         self.personButton7.backgroundColor = UIColor.grayColor()
         
+        self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton1.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton1.layer.cornerRadius = 20.0;
+        
+        self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton2.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton2.layer.cornerRadius = 20.0;
+        
+        self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton3.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton3.layer.cornerRadius = 20.0;
+        
+        self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton4.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton4.layer.cornerRadius = 20.0;
+        
+        
+        self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton5.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton5.layer.cornerRadius = 20.0;
+        
+        self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton6.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton6.layer.cornerRadius = 20.0;
+        
+        self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton7.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton7.layer.cornerRadius = 20.0;
+
+        
         delay(1.0) {
             self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
         }
@@ -1269,7 +1385,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.buttonIsOn7 = true
         }
         
-        
         // update 3
         if buttonOn3 == 1 {
             self.personButton1.backgroundColor = UIColor.whiteColor()
@@ -1301,113 +1416,118 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         var araryNum = self.avalible.count
         
+        println("Length = \(araryNum)")
+        
         if araryNum > 3 {
             
-            if araryNum == 4 {
-                let buttonOn4 = self.avalible[3]
+            for var i: Int = 3; i < araryNum + 1; i++ {
                 
-                // update 4
-                if buttonOn4 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                if i == 4 {
+                    let buttonOn4 = self.avalible[3]
                     
-                }else if buttonOn4 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn4 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                    // update 4
+                    if buttonOn4 == 1 {
+                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 2 {
+                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 3 {
+                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 4 {
+                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 5 {
+                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 6 {
+                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn4 == 7 {
+                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                    }
                 }
-            }
-            
-            if araryNum == 5 {
-                let buttonOn5 = self.avalible[4]
                 
-                // update 5
-                if buttonOn5 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                if i == 5 {
+                    let buttonOn5 = self.avalible[4]
                     
-                }else if buttonOn5 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn5 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                    // update 5
+                    if buttonOn5 == 1 {
+                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 2 {
+                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 3 {
+                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 4 {
+                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 5 {
+                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 6 {
+                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn5 == 7 {
+                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                    }
                 }
-            }
-            
-            if araryNum == 6 {
-                let buttonOn6 = self.avalible[5]
                 
-                // update 6
-                if buttonOn6 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                if i == 6 {
+                    let buttonOn6 = self.avalible[5]
                     
-                }else if buttonOn6 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn6 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                    // update 6
+                    if buttonOn6 == 1 {
+                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 2 {
+                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 3 {
+                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 4 {
+                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 5 {
+                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 6 {
+                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn6 == 7 {
+                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                    }
                 }
-            }
-            
-            if araryNum == 7 {
-                let buttonOn7 = self.avalible[6]
                 
-                // update 7
-                if buttonOn7 == 1 {
-                    self.personButton1.backgroundColor = UIColor.whiteColor()
+                if i == 7 {
+                    let buttonOn7 = self.avalible[6]
                     
-                }else if buttonOn7 == 2 {
-                    self.personButton2.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 3 {
-                    self.personButton3.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 4 {
-                    self.personButton4.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 5 {
-                    self.personButton5.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 6 {
-                    self.personButton6.backgroundColor = UIColor.whiteColor()
-                    
-                }else if buttonOn7 == 7 {
-                    self.personButton7.backgroundColor = UIColor.whiteColor()
+                    // update 7
+                    if buttonOn7 == 1 {
+                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 2 {
+                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 3 {
+                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 4 {
+                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 5 {
+                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 6 {
+                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        
+                    }else if buttonOn7 == 7 {
+                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                    }
                 }
             }
         }
@@ -1481,12 +1601,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         if UnityAds.sharedInstance().canShowAds(){
             var refreshAlert = UIAlertController(title: "Unlock person", message: "Watch ads for unlock person?", preferredStyle: UIAlertControllerStyle.Alert)
             
-            refreshAlert.addAction(UIAlertAction(title: "Watch", style: .Default, handler: { (action: UIAlertAction!) in
+            refreshAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
                 
                 UnityAds.sharedInstance().show()
             }))
             
-            refreshAlert.addAction(UIAlertAction(title: "Nothing", style: .Default, handler: nil))
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
             
             self.presentViewController(refreshAlert, animated: true, completion: nil)
         }else {
@@ -1536,6 +1656,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             delay(1.0) {
                 self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
+                
+                self.answer(self.buttonIndexSelected)
             }
         }
     }
@@ -1588,13 +1710,47 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.topRightButton.hidden = true
         
         self.personButton1.backgroundColor = UIColor.whiteColor()
+        self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton1.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton1.layer.cornerRadius = 20.0;
+        
         self.personButton2.backgroundColor = UIColor.whiteColor()
+        self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton2.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton2.layer.cornerRadius = 20.0;
+        
         self.personButton3.backgroundColor = UIColor.whiteColor()
+        self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton3.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton3.layer.cornerRadius = 20.0;
+        
         self.personButton4.backgroundColor = UIColor.whiteColor()
+        self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton4.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton4.layer.cornerRadius = 20.0;
+        
         
         self.personButton5.backgroundColor = UIColor.whiteColor()
+        self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton5.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton5.layer.cornerRadius = 20.0;
+        
         self.personButton6.backgroundColor = UIColor.whiteColor()
+        self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton6.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton6.layer.cornerRadius = 20.0;
+        
         self.personButton7.backgroundColor = UIColor.whiteColor()
+        self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
+        self.personButton7.layer.borderWidth = 3.0
+        // Set image corner radius
+        self.personButton7.layer.cornerRadius = 20.0;
         
         self.personButton1.enabled = true
         self.personButton2.enabled = true
