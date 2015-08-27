@@ -81,10 +81,17 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     let endQuesion: String = AppConfiguration.audioPath.endQ
     let answerQ: String = AppConfiguration.audioPath.startA
     
+    var facebookIsOn: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRecorder()
         self.actionIndicator.hidden = true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        checkAvailableForServiceType()
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -216,9 +223,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         if sender.titleLabel?.text == "Redo" {
             self.resetState()
             
-        }else if(sender.titleLabel?.text == "Share") {
-            
-            self.acctionButton.enabled = false
+        }else {
             self.topRightButton.enabled = false
             
             self.resetColor()
@@ -286,44 +291,53 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     func resetColor() {
-        self.personButton1.backgroundColor = UIColor.whiteColor()
+        
+        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
+        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
+        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
+        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
+        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
+        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
+        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
+        
+        //self.personButton1.backgroundColor = UIColor.whiteColor()
         self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton1.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton1.layer.cornerRadius = 20.0;
         
-        self.personButton2.backgroundColor = UIColor.whiteColor()
+        //self.personButton2.backgroundColor = UIColor.whiteColor()
         self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton2.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton2.layer.cornerRadius = 20.0;
         
-        self.personButton3.backgroundColor = UIColor.whiteColor()
+        //self.personButton3.backgroundColor = UIColor.whiteColor()
         self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton3.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton3.layer.cornerRadius = 20.0;
         
-        self.personButton4.backgroundColor = UIColor.whiteColor()
+        //self.personButton4.backgroundColor = UIColor.whiteColor()
         self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton4.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton4.layer.cornerRadius = 20.0;
         
         
-        self.personButton5.backgroundColor = UIColor.whiteColor()
+        //self.personButton5.backgroundColor = UIColor.whiteColor()
         self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton5.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton5.layer.cornerRadius = 20.0;
         
-        self.personButton6.backgroundColor = UIColor.whiteColor()
+        //self.personButton6.backgroundColor = UIColor.whiteColor()
         self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton6.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton6.layer.cornerRadius = 20.0;
         
-        self.personButton7.backgroundColor = UIColor.whiteColor()
+        //self.personButton7.backgroundColor = UIColor.whiteColor()
         self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
         self.personButton7.layer.borderWidth = 2.5
         // Set image corner radius
@@ -580,7 +594,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.imageSelected = imagePath
         self.audioPlayer(self.path)
         
-        self.topRightButton.setTitle("Share", forState: .Normal)
+        if facebookIsOn == true {
+            self.topRightButton.setTitle("Share", forState: .Normal)
+        }else {
+            
+            self.topRightButton.setTitle("Save", forState: .Normal)
+        }
     }
     
     func sayStop() {
@@ -771,7 +790,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     func sucessRecord() {
         
-        //self.acctionButton.enabled = false
+        self.acctionButton.enabled = true
         self.acctionButton.setTitle("Ask", forState: .Normal)
         //self.acctionButton.backgroundColor = UIColor.grayColor()
         self.isAskOn = false
@@ -883,11 +902,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         println(iconImg.size.width)
         println(iconImg.size.height)
-        
-        let newHeight = iconImg.size.height
-        let newWidth = iconImg.size.width
-        
-        var settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: newWidth, andHeight: newHeight)
+         
+        var settings = CEMovieMaker.videoSettingsWithCodec(AVVideoCodecH264, withWidth: 512.0, andHeight: 512.0)
         
         var movieMaker: CEMovieMaker = CEMovieMaker(setting: settings)
         
@@ -1142,7 +1158,18 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                                 self.actionIndicator.hidden = true
                                 
                                 self.delay(1.0) {
-                                    self.socialOption(url)
+                                    if self.facebookIsOn == true {
+                                        self.socialOption(url)
+                                    }else {
+                                        var alertDialog = UIAlertController(title: "Save successfully", message: "Your video already on video gallery", preferredStyle: UIAlertControllerStyle.Alert)
+                                        
+                                        alertDialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
+                                            self.topRightButton.enabled = true
+                                            self.resetState()
+                                        }))
+                                        
+                                        self.presentViewController(alertDialog, animated: true, completion: nil)
+                                    }
                                 }
                             }
                         })
@@ -1797,6 +1824,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         self.personButton6.enabled = true
         self.personButton7.enabled = true
         
+        self.resetColor()
+        
     }
     
     
@@ -1818,6 +1847,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         }
         
         self.mode = ""
+    }
+    
+    func checkAvailableForServiceType() {
+        
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
+            self.facebookIsOn = true
+        }else {
+            var alertDialog = UIAlertController(title: "Fackbook not avalible", message: "Please sign in to Facebook app for share video", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alertDialog.addAction(UIAlertAction(title: "Close", style: .Default, handler: { (action: UIAlertAction!) in
+                println("Handle Ok logic here")
+            }))
+            
+            presentViewController(alertDialog, animated: true, completion: nil)
+        }
+        
     }
     
     
