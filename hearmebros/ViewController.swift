@@ -288,44 +288,44 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     func resetColor() {
         self.personButton1.backgroundColor = UIColor.whiteColor()
         self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton1.layer.borderWidth = 3.0
+        self.personButton1.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton1.layer.cornerRadius = 20.0;
         
         self.personButton2.backgroundColor = UIColor.whiteColor()
         self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton2.layer.borderWidth = 3.0
+        self.personButton2.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton2.layer.cornerRadius = 20.0;
         
         self.personButton3.backgroundColor = UIColor.whiteColor()
         self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton3.layer.borderWidth = 3.0
+        self.personButton3.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton3.layer.cornerRadius = 20.0;
         
         self.personButton4.backgroundColor = UIColor.whiteColor()
         self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton4.layer.borderWidth = 3.0
+        self.personButton4.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton4.layer.cornerRadius = 20.0;
         
         
         self.personButton5.backgroundColor = UIColor.whiteColor()
         self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton5.layer.borderWidth = 3.0
+        self.personButton5.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton5.layer.cornerRadius = 20.0;
         
         self.personButton6.backgroundColor = UIColor.whiteColor()
         self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton6.layer.borderWidth = 3.0
+        self.personButton6.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton6.layer.cornerRadius = 20.0;
         
         self.personButton7.backgroundColor = UIColor.whiteColor()
         self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton7.layer.borderWidth = 3.0
+        self.personButton7.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton7.layer.cornerRadius = 20.0;
     }
@@ -797,47 +797,47 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         if isAskOn == true {
             self.personButton1.backgroundColor = UIColor.whiteColor()
             self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton1.layer.borderWidth = 3.0
+            self.personButton1.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton1.layer.cornerRadius = 20.0;
             
             self.personButton2.backgroundColor = UIColor.whiteColor()
             self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton2.layer.borderWidth = 3.0
+            self.personButton2.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton2.layer.cornerRadius = 20.0;
             
             self.personButton3.backgroundColor = UIColor.whiteColor()
             self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton3.layer.borderWidth = 3.0
+            self.personButton3.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton3.layer.cornerRadius = 20.0;
             
             self.personButton4.backgroundColor = UIColor.whiteColor()
             self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton4.layer.borderWidth = 3.0
+            self.personButton4.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton4.layer.cornerRadius = 20.0;
             
             
             self.personButton5.backgroundColor = UIColor.whiteColor()
             self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton5.layer.borderWidth = 3.0
+            self.personButton5.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton5.layer.cornerRadius = 20.0;
             
             self.personButton6.backgroundColor = UIColor.whiteColor()
             self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton6.layer.borderWidth = 3.0
+            self.personButton6.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton6.layer.cornerRadius = 20.0;
             
             self.personButton7.backgroundColor = UIColor.whiteColor()
             self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
-            self.personButton7.layer.borderWidth = 3.0
+            self.personButton7.layer.borderWidth = 2.5
             // Set image corner radius
             self.personButton7.layer.cornerRadius = 20.0;
-
+            
             
         } else if isAskOn == false {
             self.updateAnswerVisible()
@@ -847,7 +847,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         // Create a white border with defined width
         buttonBackground.layer.borderColor = UIColor.blueColor().CGColor
-        buttonBackground.layer.borderWidth = 3.0
+        buttonBackground.layer.borderWidth = 2.5
         
         // Set image corner radius
         buttonBackground.layer.cornerRadius = 20.0;
@@ -1269,154 +1269,158 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.isUpdateVisible = true
         }
         
+        delay(1.0) {
+            self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
+        }
+        
         println("Is visible = \(self.avalible)")
         
         let buttonOn1 = self.avalible[0]
         let buttonOn2 = self.avalible[1]
         let buttonOn3 = self.avalible[2]
         
-        self.personButton1.backgroundColor = UIColor.grayColor()
-        self.personButton2.backgroundColor = UIColor.grayColor()
-        self.personButton3.backgroundColor = UIColor.grayColor()
-        self.personButton4.backgroundColor = UIColor.grayColor()
+        var araryNum = self.avalible.count
         
-        self.personButton5.backgroundColor = UIColor.grayColor()
-        self.personButton6.backgroundColor = UIColor.grayColor()
-        self.personButton7.backgroundColor = UIColor.grayColor()
+        var numberOfLoop = (araryNum * 1000) + 7000
+        
+        println("numberOfLoop = \(numberOfLoop)")
+        println("Length = \(araryNum)")
+        
+        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1Off), forState: UIControlState.Normal)
+        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2Off), forState: UIControlState.Normal)
+        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3Off), forState: UIControlState.Normal)
+        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4Off), forState: UIControlState.Normal)
+        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5Off), forState: UIControlState.Normal)
+        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6Off), forState: UIControlState.Normal)
+        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7Off), forState: UIControlState.Normal)
         
         self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton1.layer.borderWidth = 3.0
+        self.personButton1.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton1.layer.cornerRadius = 20.0;
         
         self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton2.layer.borderWidth = 3.0
+        self.personButton2.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton2.layer.cornerRadius = 20.0;
         
         self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton3.layer.borderWidth = 3.0
+        self.personButton3.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton3.layer.cornerRadius = 20.0;
         
         self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton4.layer.borderWidth = 3.0
+        self.personButton4.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton4.layer.cornerRadius = 20.0;
         
         
         self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton5.layer.borderWidth = 3.0
+        self.personButton5.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton5.layer.cornerRadius = 20.0;
         
         self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton6.layer.borderWidth = 3.0
+        self.personButton6.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton6.layer.cornerRadius = 20.0;
         
         self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton7.layer.borderWidth = 3.0
+        self.personButton7.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton7.layer.cornerRadius = 20.0;
-
-        
-        delay(1.0) {
-            self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
-        }
         
         // update 1
         if buttonOn1 == 1 {
-            self.personButton1.backgroundColor = UIColor.whiteColor()
+            
+            self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
             self.buttonIsOn1 = true
             
         }else if buttonOn1 == 2 {
-            self.personButton2.backgroundColor = UIColor.whiteColor()
+            self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
             self.buttonIsOn2 = true
             
         }else if buttonOn1 == 3 {
-            self.personButton3.backgroundColor = UIColor.whiteColor()
+            self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
             self.buttonIsOn3 = true
             
         }else if buttonOn1 == 4 {
-            self.personButton4.backgroundColor = UIColor.whiteColor()
+            self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
             self.buttonIsOn4 = true
             
         }else if buttonOn1 == 5 {
-            self.personButton5.backgroundColor = UIColor.whiteColor()
+            self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
             self.buttonIsOn5 = true
             
         }else if buttonOn1 == 6 {
-            self.personButton6.backgroundColor = UIColor.whiteColor()
+            self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
             self.buttonIsOn6 = true
             
         }else if buttonOn1 == 7 {
-            self.personButton7.backgroundColor = UIColor.whiteColor()
+            self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
             self.buttonIsOn7 = true
         }
         
         // update 2
         if buttonOn2 == 1 {
-            self.personButton1.backgroundColor = UIColor.whiteColor()
+            
+            self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
             self.buttonIsOn1 = true
             
         }else if buttonOn2 == 2 {
-            self.personButton2.backgroundColor = UIColor.whiteColor()
+            self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
             self.buttonIsOn2 = true
             
         }else if buttonOn2 == 3 {
-            self.personButton3.backgroundColor = UIColor.whiteColor()
+            self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
             self.buttonIsOn3 = true
             
         }else if buttonOn2 == 4 {
-            self.personButton4.backgroundColor = UIColor.whiteColor()
+            self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
             self.buttonIsOn4 = true
             
         }else if buttonOn2 == 5 {
-            self.personButton5.backgroundColor = UIColor.whiteColor()
+            self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
             self.buttonIsOn5 = true
             
         }else if buttonOn2 == 6 {
-            self.personButton6.backgroundColor = UIColor.whiteColor()
+            self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
             self.buttonIsOn6 = true
             
         }else if buttonOn2 == 7 {
-            self.personButton7.backgroundColor = UIColor.whiteColor()
+            self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
             self.buttonIsOn7 = true
         }
-        
         // update 3
         if buttonOn3 == 1 {
-            self.personButton1.backgroundColor = UIColor.whiteColor()
+            
+            self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
             self.buttonIsOn1 = true
+            
         }else if buttonOn3 == 2 {
-            self.personButton2.backgroundColor = UIColor.whiteColor()
+            self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
             self.buttonIsOn2 = true
             
         }else if buttonOn3 == 3 {
-            self.personButton3.backgroundColor = UIColor.whiteColor()
+            self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
             self.buttonIsOn3 = true
             
         }else if buttonOn3 == 4 {
-            self.personButton4.backgroundColor = UIColor.whiteColor()
+            self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
             self.buttonIsOn4 = true
             
         }else if buttonOn3 == 5 {
-            self.personButton5.backgroundColor = UIColor.whiteColor()
+            self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
             self.buttonIsOn5 = true
             
         }else if buttonOn3 == 6 {
-            self.personButton6.backgroundColor = UIColor.whiteColor()
+            self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
             self.buttonIsOn6 = true
             
         }else if buttonOn3 == 7 {
-            self.personButton7.backgroundColor = UIColor.whiteColor()
+            self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
             self.buttonIsOn7 = true
         }
-        
-        var araryNum = self.avalible.count
-        
-        println("Length = \(araryNum)")
         
         if araryNum > 3 {
             
@@ -1427,25 +1431,33 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     
                     // update 4
                     if buttonOn4 == 1 {
-                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
+                        self.buttonIsOn1 = true
                         
                     }else if buttonOn4 == 2 {
-                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
+                        self.buttonIsOn2 = true
                         
                     }else if buttonOn4 == 3 {
-                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
+                        self.buttonIsOn3 = true
                         
                     }else if buttonOn4 == 4 {
-                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
+                        self.buttonIsOn4 = true
                         
                     }else if buttonOn4 == 5 {
-                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
+                        self.buttonIsOn5 = true
                         
                     }else if buttonOn4 == 6 {
-                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
+                        self.buttonIsOn6 = true
                         
                     }else if buttonOn4 == 7 {
-                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
+                        self.buttonIsOn7 = true
                     }
                 }
                 
@@ -1454,25 +1466,33 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     
                     // update 5
                     if buttonOn5 == 1 {
-                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
+                        self.buttonIsOn1 = true
                         
                     }else if buttonOn5 == 2 {
-                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
+                        self.buttonIsOn2 = true
                         
                     }else if buttonOn5 == 3 {
-                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
+                        self.buttonIsOn3 = true
                         
                     }else if buttonOn5 == 4 {
-                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
+                        self.buttonIsOn4 = true
                         
                     }else if buttonOn5 == 5 {
-                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
+                        self.buttonIsOn5 = true
                         
                     }else if buttonOn5 == 6 {
-                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
+                        self.buttonIsOn6 = true
                         
                     }else if buttonOn5 == 7 {
-                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
+                        self.buttonIsOn7 = true
                     }
                 }
                 
@@ -1481,25 +1501,33 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     
                     // update 6
                     if buttonOn6 == 1 {
-                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
+                        self.buttonIsOn1 = true
                         
                     }else if buttonOn6 == 2 {
-                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
+                        self.buttonIsOn2 = true
                         
                     }else if buttonOn6 == 3 {
-                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
+                        self.buttonIsOn3 = true
                         
                     }else if buttonOn6 == 4 {
-                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
+                        self.buttonIsOn4 = true
                         
                     }else if buttonOn6 == 5 {
-                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
+                        self.buttonIsOn5 = true
                         
                     }else if buttonOn6 == 6 {
-                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
+                        self.buttonIsOn6 = true
                         
                     }else if buttonOn6 == 7 {
-                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
+                        self.buttonIsOn7 = true
                     }
                 }
                 
@@ -1508,25 +1536,33 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                     
                     // update 7
                     if buttonOn7 == 1 {
-                        self.personButton1.backgroundColor = UIColor.whiteColor()
+                        
+                        self.personButton1.setImage(UIImage(named: AppConfiguration.imagePath.ans1On), forState: UIControlState.Normal)
+                        self.buttonIsOn1 = true
                         
                     }else if buttonOn7 == 2 {
-                        self.personButton2.backgroundColor = UIColor.whiteColor()
+                        self.personButton2.setImage(UIImage(named: AppConfiguration.imagePath.ans2On), forState: UIControlState.Normal)
+                        self.buttonIsOn2 = true
                         
                     }else if buttonOn7 == 3 {
-                        self.personButton3.backgroundColor = UIColor.whiteColor()
+                        self.personButton3.setImage(UIImage(named: AppConfiguration.imagePath.ans3On), forState: UIControlState.Normal)
+                        self.buttonIsOn3 = true
                         
                     }else if buttonOn7 == 4 {
-                        self.personButton4.backgroundColor = UIColor.whiteColor()
+                        self.personButton4.setImage(UIImage(named: AppConfiguration.imagePath.ans4On), forState: UIControlState.Normal)
+                        self.buttonIsOn4 = true
                         
                     }else if buttonOn7 == 5 {
-                        self.personButton5.backgroundColor = UIColor.whiteColor()
+                        self.personButton5.setImage(UIImage(named: AppConfiguration.imagePath.ans5On), forState: UIControlState.Normal)
+                        self.buttonIsOn5 = true
                         
                     }else if buttonOn7 == 6 {
-                        self.personButton6.backgroundColor = UIColor.whiteColor()
+                        self.personButton6.setImage(UIImage(named: AppConfiguration.imagePath.ans6On), forState: UIControlState.Normal)
+                        self.buttonIsOn6 = true
                         
                     }else if buttonOn7 == 7 {
-                        self.personButton7.backgroundColor = UIColor.whiteColor()
+                        self.personButton7.setImage(UIImage(named: AppConfiguration.imagePath.ans7On), forState: UIControlState.Normal)
+                        self.buttonIsOn7 = true
                     }
                 }
             }
@@ -1711,44 +1747,44 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         
         self.personButton1.backgroundColor = UIColor.whiteColor()
         self.personButton1.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton1.layer.borderWidth = 3.0
+        self.personButton1.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton1.layer.cornerRadius = 20.0;
         
         self.personButton2.backgroundColor = UIColor.whiteColor()
         self.personButton2.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton2.layer.borderWidth = 3.0
+        self.personButton2.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton2.layer.cornerRadius = 20.0;
         
         self.personButton3.backgroundColor = UIColor.whiteColor()
         self.personButton3.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton3.layer.borderWidth = 3.0
+        self.personButton3.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton3.layer.cornerRadius = 20.0;
         
         self.personButton4.backgroundColor = UIColor.whiteColor()
         self.personButton4.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton4.layer.borderWidth = 3.0
+        self.personButton4.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton4.layer.cornerRadius = 20.0;
         
         
         self.personButton5.backgroundColor = UIColor.whiteColor()
         self.personButton5.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton5.layer.borderWidth = 3.0
+        self.personButton5.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton5.layer.cornerRadius = 20.0;
         
         self.personButton6.backgroundColor = UIColor.whiteColor()
         self.personButton6.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton6.layer.borderWidth = 3.0
+        self.personButton6.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton6.layer.cornerRadius = 20.0;
         
         self.personButton7.backgroundColor = UIColor.whiteColor()
         self.personButton7.layer.borderColor = UIColor.clearColor().CGColor
-        self.personButton7.layer.borderWidth = 3.0
+        self.personButton7.layer.borderWidth = 2.5
         // Set image corner radius
         self.personButton7.layer.cornerRadius = 20.0;
         
