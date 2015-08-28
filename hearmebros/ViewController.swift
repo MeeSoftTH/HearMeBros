@@ -59,6 +59,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     var countDown: Int = 10
     var hiLastSelected: Int = 0
     var answerArray = [Int]()
+    var isFirstRecrd: Bool = false
     
     var path: String = ""
     var hiPath: String = ""
@@ -249,20 +250,21 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     @IBAction func askThem(sender: UIButton) {
         if (sender.titleLabel?.text == "Ask"){
             
-            self.resetState()
+            if isFirstRecrd == false {
+                self.resetState()
+                self.resetColor()
+            }else {
+                isFirstRecrd = false
+            }
+            sender.setTitle("Ready", forState: .Normal)
+            self.acctionButton.enabled = false
             
             self.isUpdateVisible = false
-            
-            sender.setTitle("Stop", forState: .Normal)
             
             delay(1.0) {
                 self.audioPlayer(self.quetion)
                 self.mode = "REC"
-                self.acctionButton.enabled = false
-                
             }
-            
-            self.resetColor()
             
             self.personButton1.enabled = false
             self.personButton2.enabled = false
@@ -275,9 +277,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             UnityAds.sharedInstance().delegate = self
             UnityAds.sharedInstance().startWithGameId("57599")
-            
-            self.recordTime.text = "Recording 10"
-            
+        
             self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
                 target:self,
                 selector:"updateAudioMeter:",
@@ -285,7 +285,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 repeats:true)
         } else if (sender.titleLabel?.text == "Stop"){
             self.mode = "STOP"
+            
             soundRecorder.stop()
+            self.recordTime.text = "Recorded"
+            self.acctionButton.enabled = false
+            self.acctionButton.setTitle("Waiting", forState: .Normal)
+            
             self.audioPlayer(self.endQuesion)
         }
     }
@@ -783,6 +788,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             if sec == 10 {
                 soundRecorder.stop()
+                self.recordTime.text = "Recorded"
+                self.acctionButton.enabled = false
+                self.acctionButton.setTitle("Waiting", forState: .Normal)
                 sayStop()
             }
         }
@@ -1296,9 +1304,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             self.isUpdateVisible = true
         }
         
-        delay(1.0) {
-            self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
-        }
+        self.recordTime.text = "\(String(self.avalible.count)) people want to answer."
         
         println("Is visible = \(self.avalible)")
         
@@ -1831,19 +1837,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
         if self.mode == "REC" {
+            //self.recordTime.text = "Start recording"
+            self.acctionButton.setTitle("Stop", forState: .Normal)
             self.acctionButton.enabled = true
-            self.mode = ""
             println("Start rec")
             self.soundRecorder.record()
+            
         }else if self.mode == "ANS" {
             println("Enable Top Button")
             self.topRightButton.hidden = false
             self.topRightButton.enabled = true
-            self.mode = ""
+  
         }else if self.mode == "STOP" {
-            delay(1.0){
-                self.sucessRecord()
-            }
+            self.sucessRecord()
         }
         
         self.mode = ""
